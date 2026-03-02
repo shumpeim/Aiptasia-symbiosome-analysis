@@ -1,6 +1,3 @@
-# Aiptasia-symbiosome-analysis
-Code for performing analyses and generating figures from Fragpipe output for Aiptasia symbiosome proteomics experiment.
-
 ## Requirements
 - R 4.3.3
 - Bioconductor 3.18
