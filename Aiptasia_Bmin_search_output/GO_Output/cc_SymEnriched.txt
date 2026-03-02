@@ -93,6 +93,7 @@ GO:0005856	cytoskeleton	1856	9	15.71	0.49042
 GO:0009897	external side of plasma membrane	87	1	0.74	0.52347
 GO:0005741	mitochondrial outer membrane	102	1	0.86	0.58079
 GO:0016324	apical plasma membrane	236	2	2	0.59621
+GO:0044815	DNA packaging complex	108	1	0.91	0.60176
 GO:0005925	focal adhesion	120	1	1.02	0.64061
 GO:0005789	endoplasmic reticulum membrane	649	5	5.49	0.64663
 GO:0005635	nuclear envelope	342	7	2.89	0.65104
@@ -104,18 +105,18 @@ GO:0005829	cytosol	1499	11	12.69	0.79607
 GO:0005622	intracellular anatomical structure	12381	96	104.78	0.79713
 GO:0043005	neuron projection	810	6	6.86	0.82548
 GO:0005604	basement membrane	220	1	1.86	0.84763
+GO:0032993	protein-DNA complex	223	1	1.89	0.85151
 GO:0030424	axon	402	2	3.4	0.85763
 GO:0005938	cell cortex	376	7	3.18	0.85831
 GO:0043025	neuronal cell body	295	1	2.5	0.92020
 GO:0005813	centrosome	495	2	4.19	0.92500
 GO:0030425	dendrite	339	1	2.87	0.94547
 GO:0005874	microtubule	405	1	3.43	0.96925
-GO:0032993	protein-DNA complex	417	1	3.53	0.97230
 GO:0045202	synapse	665	5	5.63	0.97335
 GO:0005929	cilium	444	1	3.76	0.97810
 GO:0005694	chromosome	665	1	5.63	0.99685
 GO:0005737	cytoplasm	9367	90	79.27	0.99990
-GO:0032991	protein-containing complex	4112	19	34.8	0.99999
+GO:0032991	protein-containing complex	4079	19	34.52	0.99999
 GO:0005634	nucleus	5371	23	45.46	1.00000
 GO:1990904	ribonucleoprotein complex	350	1	2.96	1.00000
 GO:0005759	mitochondrial matrix	205	1	1.73	1.00000
@@ -148,7 +149,7 @@ GO:0000323	lytic vacuole	472	26	3.99	1.00000
 GO:0065010	extracellular membrane-bounded organelle	765	16	6.47	1.00000
 GO:0098552	side of membrane	161	5	1.36	1.00000
 GO:0005902	microvillus	73	1	0.62	1.00000
-GO:0140535	intracellular protein-containing complex	570	1	4.82	1.00000
+GO:0140535	intracellular protein-containing complex	562	1	4.76	1.00000
 GO:0036125	fatty acid beta-oxidation multienzyme complex	2	1	0.02	1.00000
 GO:0030667	secretory granule membrane	108	2	0.91	1.00000
 GO:0031234	extrinsic component of cytoplasmic side of plasma membrane	26	1	0.22	1.00000
@@ -308,7 +309,8 @@ GO:0000930	gamma-tubulin complex	11	0	0.09	1.00000
 GO:0000931	gamma-tubulin ring complex	5	0	0.04	1.00000
 GO:0000932	P-body	101	0	0.85	1.00000
 GO:0000935	division septum	1	0	0.01	1.00000
-GO:0000940	outer kinetochore	21	0	0.18	1.00000
+GO:0000939	inner kinetochore	2	0	0.02	1.00000
+GO:0000940	outer kinetochore	19	0	0.16	1.00000
 GO:0000943	retrotransposon nucleocapsid	50	0	0.42	1.00000
 GO:0000974	Prp19 complex	3	0	0.03	1.00000
 GO:0001411	hyphal tip	2	0	0.02	1.00000
@@ -856,14 +858,14 @@ GO:0034423	autophagosome lumen	1	0	0.01	1.00000
 GO:0034451	centriolar satellite	14	0	0.12	1.00000
 GO:0034455	t-UTP complex	3	0	0.03	1.00000
 GO:0034464	BBSome	10	0	0.08	1.00000
-GO:0034518	RNA cap binding complex	25	0	0.21	1.00000
+GO:0034518	RNA cap binding complex	17	0	0.14	1.00000
 GO:0034657	GID complex	1	0	0.01	1.00000
 GO:0034663	endoplasmic reticulum chaperone complex	2	0	0.02	1.00000
 GO:0034666	integrin alpha2-beta1 complex	1	0	0.01	1.00000
 GO:0034673	inhibin-betaglycan-ActRII complex	1	0	0.01	1.00000
 GO:0034678	integrin alpha8-beta1 complex	3	0	0.03	1.00000
 GO:0034679	integrin alpha9-beta1 complex	1	0	0.01	1.00000
-GO:0034702	monoatomic ion channel complex	313	0	2.65	1.00000
+GO:0034702	ion channel complex	313	0	2.65	1.00000
 GO:0034703	cation channel complex	190	0	1.61	1.00000
 GO:0034704	calcium channel complex	48	0	0.41	1.00000
 GO:0034705	potassium channel complex	116	0	0.98	1.00000
@@ -997,5 +999,3 @@ GO:0043601	nuclear replisome	14	0	0.12	1.00000
 GO:0043625	delta DNA polymerase complex	2	0	0.02	1.00000
 GO:0043626	PCNA complex	2	0	0.02	1.00000
 GO:0043656	host intracellular region	28	0	0.24	1.00000
-GO:0043679	axon terminus	66	0	0.56	1.00000
-GO:0044096	type IV pilus	1	0	0.01	1.00000

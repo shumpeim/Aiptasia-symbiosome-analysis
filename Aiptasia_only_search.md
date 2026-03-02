@@ -3,29 +3,16 @@ Aiptasia_only_search
 Shumpei Maruyama
 2026-03-02
 
-- [R MarkDown](#r-markdown)
+- [Aiptasia genome only search](#aiptasia-genome-only-search)
 
-## R MarkDown
+## Aiptasia genome only search
 
 ``` r
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 ``` r
-# To reproduce this analysis, you must first have R version 4.3.3, then install version 3.18 of BiocManager using the chunk below
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install(version = "3.18")  # match your version
-```
-
-``` r
-#Load the correct version of packages used in this project
-renv::restore()
-```
-
-    ## - The library is already synchronized with the lockfile.
-
-``` r
+# See README for environment setup instructions
 library(topGO)
 library(tidyverse) 
 library(stringr)
@@ -76,7 +63,7 @@ normalyzerDE("vignette_run_Aipnorm",
     ## [1] "Writing 2154 annotated rows to Aiptasia_only_search_output/vignette_run_Aipnorm/vignette_run_Aipnorm_stats.tsv"
     ## [1] "Writing statistics report"
 
-    ## [1] "All done! Results are stored in: Aiptasia_only_search_output/vignette_run_Aipnorm, processing time was 0.1 minutes"
+    ## [1] "All done! Results are stored in: Aiptasia_only_search_output/vignette_run_Aipnorm, processing time was 0 minutes"
 
 ``` r
 #Rename spreadsheet
@@ -221,12 +208,7 @@ PCAdata <- PCAdata %>% relocate("Treatment", .before="Replicate")
 PCAdata <- PCAdata%>% dplyr::select(-c("ID","Replicate"))
 pca_res <- prcomp(PCAdata[,-1], scale. = TRUE)
 PCi <-data.frame(pca_res$x,Treatment=PCAdata$Treatment)
-autoplot(pca_res)
-```
 
-![](Aiptasia_only_search_files/figure-gfm/pca_plot-1.png)<!-- -->
-
-``` r
 pca_var <- pca_res$sdev^2
 pca_var_pct <- round(pca_var / sum(pca_var) * 100, 2)
 
@@ -241,7 +223,7 @@ ggplot(PCi,aes(x=PC1,y=PC2,fill=Treatment))+
   theme_classic() 
 ```
 
-![](Aiptasia_only_search_files/figure-gfm/pca_plot-2.png)<!-- -->
+![](Aiptasia_only_search_files/figure-gfm/pca_plot-1.png)<!-- -->
 
 ``` r
 #Extract just Protein IDs for GO-term enrichment analysis
@@ -363,3 +345,92 @@ ggarrange(TMPercentplot, SAGPercentplot)
 ```
 
 ![](Aiptasia_only_search_files/figure-gfm/SAG_TM_plot-1.png)<!-- -->
+
+``` r
+sessionInfo()
+```
+
+    ## R version 4.3.3 (2024-02-29)
+    ## Platform: aarch64-apple-darwin20 (64-bit)
+    ## Running under: macOS 15.7.3
+    ## 
+    ## Matrix products: default
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+    ## 
+    ## locale:
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## 
+    ## time zone: America/Los_Angeles
+    ## tzcode source: internal
+    ## 
+    ## attached base packages:
+    ## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
+    ## [8] base     
+    ## 
+    ## other attached packages:
+    ##  [1] ggpubr_0.6.0         NormalyzerDE_1.18.1  ggfortify_0.4.17    
+    ##  [4] readxl_1.4.3         ggrepel_0.9.6        lubridate_1.9.3     
+    ##  [7] forcats_1.0.0        stringr_1.5.1        dplyr_1.1.4         
+    ## [10] purrr_1.0.2          readr_2.1.5          tidyr_1.3.1         
+    ## [13] tibble_3.2.1         ggplot2_3.5.1        tidyverse_2.0.0     
+    ## [16] topGO_2.52.0         SparseM_1.84-2       GO.db_3.17.0        
+    ## [19] AnnotationDbi_1.62.2 IRanges_2.34.1       S4Vectors_0.38.2    
+    ## [22] Biobase_2.60.0       graph_1.78.0         BiocGenerics_0.46.0 
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##   [1] rstudioapi_0.17.1           magrittr_2.0.3             
+    ##   [3] farver_2.1.2                rmarkdown_2.29             
+    ##   [5] zlibbioc_1.46.0             vctrs_0.6.5                
+    ##   [7] memoise_2.0.1               RCurl_1.98-1.16            
+    ##   [9] base64enc_0.1-3             terra_1.7-78               
+    ##  [11] rstatix_0.7.2               htmltools_0.5.8.1          
+    ##  [13] S4Arrays_1.0.6              haven_2.5.4                
+    ##  [15] broom_1.0.7                 raster_3.6-30              
+    ##  [17] cellranger_1.1.0            Formula_1.2-5              
+    ##  [19] htmlwidgets_1.6.4           sandwich_3.1-1             
+    ##  [21] zoo_1.8-12                  cachem_1.1.0               
+    ##  [23] lifecycle_1.0.4             pkgconfig_2.0.3            
+    ##  [25] Matrix_1.6-5                R6_2.5.1                   
+    ##  [27] fastmap_1.2.0               GenomeInfoDbData_1.2.10    
+    ##  [29] MatrixGenerics_1.12.3       digest_0.6.37              
+    ##  [31] colorspace_2.1-1            Hmisc_5.2-1                
+    ##  [33] GenomicRanges_1.52.1        RSQLite_2.3.9              
+    ##  [35] labeling_0.4.3              fansi_1.0.6                
+    ##  [37] timechange_0.3.0            httr_1.4.7                 
+    ##  [39] abind_1.4-8                 mgcv_1.9-1                 
+    ##  [41] compiler_4.3.3              proxy_0.4-27               
+    ##  [43] bit64_4.5.2                 withr_3.0.2                
+    ##  [45] htmlTable_2.4.3             backports_1.5.0            
+    ##  [47] carData_3.0-5               DBI_1.2.3                  
+    ##  [49] hexbin_1.28.5               ggsignif_0.6.4             
+    ##  [51] MASS_7.3-60.0.1             DelayedArray_0.26.7        
+    ##  [53] tools_4.3.3                 foreign_0.8-86             
+    ##  [55] ape_5.8                     nnet_7.3-19                
+    ##  [57] glue_1.8.0                  nlme_3.1-164               
+    ##  [59] grid_4.3.3                  checkmate_2.3.2            
+    ##  [61] cluster_2.1.6               generics_0.1.3             
+    ##  [63] gtable_0.3.6                nortest_1.0-4              
+    ##  [65] tzdb_0.4.0                  class_7.3-22               
+    ##  [67] preprocessCore_1.62.1       data.table_1.16.2          
+    ##  [69] hms_1.1.3                   sp_2.1-4                   
+    ##  [71] car_3.1-3                   utf8_1.2.4                 
+    ##  [73] XVector_0.40.0              pillar_1.9.0               
+    ##  [75] limma_3.56.2                splines_4.3.3              
+    ##  [77] RcmdrMisc_2.9-1             lattice_0.22-5             
+    ##  [79] bit_4.5.0.1                 tidyselect_1.2.1           
+    ##  [81] Biostrings_2.68.1           knitr_1.49                 
+    ##  [83] gridExtra_2.3               SummarizedExperiment_1.30.2
+    ##  [85] xfun_0.49                   matrixStats_1.4.1          
+    ##  [87] stringi_1.8.4               yaml_2.3.10                
+    ##  [89] evaluate_1.0.1              codetools_0.2-19           
+    ##  [91] BiocManager_1.30.25         cli_3.6.3                  
+    ##  [93] affyio_1.70.0               rpart_4.1.23               
+    ##  [95] munsell_0.5.1               Rcpp_1.0.13-1              
+    ##  [97] GenomeInfoDb_1.36.4         png_0.1-8                  
+    ##  [99] parallel_4.3.3              blob_1.2.4                 
+    ## [101] bitops_1.0-9                scales_1.3.0               
+    ## [103] affy_1.78.2                 e1071_1.7-16               
+    ## [105] crayon_1.5.3                rlang_1.1.4                
+    ## [107] cowplot_1.1.3               vsn_3.68.0                 
+    ## [109] KEGGREST_1.40.1
