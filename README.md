@@ -12,4 +12,4 @@ Code for performing analyses and generating figures from Fragpipe output for Aip
    BiocManager::install(version = "3.18")
    install.packages("renv")
    renv::restore()
-4. Open and knit Aiptasia_only_search.Rmd
+4. Open and knit the rmd files!
