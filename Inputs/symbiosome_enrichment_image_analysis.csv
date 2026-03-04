@@ -1,0 +1,13 @@
+﻿Prep,Staining,Percentage
+Dissociated cells,Symbiosome,0.496855346
+After host cell lysis,Symbiosome,0.6328125
+After Percoll,Symbiosome,0.801886792
+After NP-40,Symbiosome,0.074074074
+Dissociated cells,Symbiocyte,0.144654088
+After host cell lysis,Symbiocyte,0.0078125
+After Percoll,Symbiocyte,0
+After NP-40,Symbiocyte,0
+Dissociated cells,Free algae,0.358490566
+After host cell lysis,Free algae,0.359375
+After Percoll,Free algae,0.198113208
+After NP-40,Free algae,0.925925926

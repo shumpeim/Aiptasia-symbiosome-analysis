@@ -1,0 +1,258 @@
+﻿Sample,Image name,Marker,Vesicle diameters micron,Positive,Group
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.487,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.76,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.481,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.643,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.652,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.519,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.559,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.583,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-01,CTSB,0.401,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-02,CTSB,0.675,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-02,CTSB,0.409,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-02,CTSB,0.614,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-02,CTSB,0.492,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-02,CTSB,1.01,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-03,CTSB,0.319,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-03,CTSB,0.483,yes,CTSB_yes
+Symbiocyte,CTSB symbiocyte cell-03,CTSB,0.34,yes,CTSB_yes
+Symbiocyte,LAMP1B symbiocyte cell-01,LAMP1B,0.442,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-01,LAMP1B,0.286,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-02,LAMP1B,0.368,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-02,LAMP1B,0.439,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-02,LAMP1B,0.621,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-02,LAMP1B,0.555,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-02,LAMP1B,0.559,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,0.339,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,0.341,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,0.459,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,0.401,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,1.17,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,1.02,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,0.691,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,1.38,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,0.337,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-03,LAMP1B,0.446,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,1.53,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.565,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.511,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.702,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.545,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.873,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.443,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.333,no,LAMP1B_no
+Symbiocyte,LAMP1B symbiocyte cell-04,LAMP1B,0.353,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.341,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.561,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.379,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.364,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.302,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.412,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.357,yes,LAMP1B_yes
+Symbiocyte,LAMP1B symbiocyte cell-05,LAMP1B,0.51,yes,LAMP1B_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.44,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.444,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.368,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.428,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.424,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.414,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.623,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.451,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.616,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,1.05,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,0.533,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-01,SLC26A11,1.53,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-02,SLC26A11,0.452,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-02,SLC26A11,0.422,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-02,SLC26A11,0.413,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-02,SLC26A11,0.681,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-02,SLC26A11,0.655,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-02,SLC26A11,0.396,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-03,SLC26A11,0.458,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-03,SLC26A11,0.483,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-03,SLC26A11,0.431,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,1.74,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,1.65,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.375,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.471,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.988,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.541,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.773,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.996,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.48,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-04,SLC26A11,0.488,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.626,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.535,yes,SLC26A11_yes
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.483,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.572,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.657,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.505,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.773,no,SLC26A11_no
+Symbiocyte,SLC26A11 symbiocyte cell-05,SLC26A11,0.417,no,SLC26A11_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_01,LAMP1A,0.391,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_01,LAMP1A,0.636,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_01,LAMP1A,0.784,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_01,LAMP1A,1.02,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_01,LAMP1A,1.71,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_02,LAMP1A,0.317,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_02,LAMP1A,0.372,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_02,LAMP1A,0.403,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_02,LAMP1A,0.448,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_02,LAMP1A,0.453,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_02,LAMP1A,0.558,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_02,LAMP1A,0.979,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.368,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.4,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.427,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.52,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.56,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.591,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.594,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-01,LAMP1A,0.775,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-02,LAMP1A,0.358,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-02,LAMP1A,0.366,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-02,LAMP1A,0.491,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.456,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.482,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.499,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.588,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.588,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.623,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.645,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,0.939,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,1.08,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-03,LAMP1A,1.46,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-04,LAMP1A,0.287,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-04,LAMP1A,0.403,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-04,LAMP1A,0.829,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-04,LAMP1A,1.57,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.328,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.348,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.403,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.403,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.464,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.467,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.469,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.472,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-05,LAMP1A,0.856,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-06,LAMP1A,0.37,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-06,LAMP1A,0.415,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-06,LAMP1A,0.545,yes,LAMP1A_yes
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-06,LAMP1A,0.564,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-06,LAMP1A,0.61,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-06,LAMP1A,0.611,no,LAMP1A_no
+Symbiocyte,LAMP1A_SYMBIOCYTE_4Y-06,LAMP1A,1.35,yes,LAMP1A_yes
+Symbiosome,LAMP1A_Slow_Symbiosome_1-01,LAMP1A_Symbiosome,0.667,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_1-01,LAMP1A_Symbiosome,0.838,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_1-01,LAMP1A_Symbiosome,0.873,yes,LAMP1A_Symbiosome_yes
+Symbiosome,LAMP1A_Slow_Symbiosome_1-01,LAMP1A_Symbiosome,1.09,yes,LAMP1A_Symbiosome_yes
+Symbiosome,LAMP1A_Slow_Symbiosome_1-01,LAMP1A_Symbiosome,1.42,yes,LAMP1A_Symbiosome_yes
+Symbiosome,LAMP1A_Slow_Symbiosome_1-01,LAMP1A_Symbiosome,1.43,yes,LAMP1A_Symbiosome_yes
+Symbiosome,LAMP1A_Slow_Symbiosome_1-02,LAMP1A_Symbiosome,1.32,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_1-02,LAMP1A_Symbiosome,1.65,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_2-01,LAMP1A_Symbiosome,0.673,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_2-01,LAMP1A_Symbiosome,1,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_2-02,LAMP1A_Symbiosome,0.882,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_2-02,LAMP1A_Symbiosome,1.13,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_2-02,LAMP1A_Symbiosome,1.13,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_2-02,LAMP1A_Symbiosome,1.19,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_2-02,LAMP1A_Symbiosome,1.64,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,0.796,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,0.89,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,0.909,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,1.14,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,1.28,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,1.29,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,1.32,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-01,LAMP1A_Symbiosome,1.84,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-02,LAMP1A_Symbiosome,0.814,no,LAMP1A_Symbiosome_no
+Symbiosome,LAMP1A_Slow_Symbiosome_3-02,LAMP1A_Symbiosome,1.14,no,LAMP1A_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.05,yes,CTSB_Symbiosome_yes
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.777,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.38,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.898,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.988,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.765,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.15,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.32,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.671,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.537,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.626,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.03,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.708,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.32,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.62,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.4,yes,CTSB_Symbiosome_yes
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.809,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.974,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.737,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,2.09,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.593,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.565,yes,CTSB_Symbiosome_yes
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.49,yes,CTSB_Symbiosome_yes
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.806,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.717,yes,CTSB_Symbiosome_yes
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.01,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.492,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.893,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,1.1,no,CTSB_Symbiosome_no
+Symbiosome,CTSB_symbiosome-06,CTSB_Symbiosome,0.95,no,CTSB_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-01,LAMP1B_Symbiosome,2.18,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-01,LAMP1B_Symbiosome,1.01,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-02,LAMP1B_Symbiosome,0.874,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-03,LAMP1B_Symbiosome,0.967,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-03,LAMP1B_Symbiosome,0.774,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-03,LAMP1B_Symbiosome,0.61,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-03,LAMP1B_Symbiosome,1.19,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-03,LAMP1B_Symbiosome,0.699,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.992,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.584,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,1.49,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.859,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,1.06,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,1.67,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,1.75,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,1.23,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.735,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.78,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.685,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.861,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-04,LAMP1B_Symbiosome,0.607,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-05,LAMP1B_Symbiosome,1.02,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-05,LAMP1B_Symbiosome,1.16,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-05,LAMP1B_Symbiosome,0.944,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-05,LAMP1B_Symbiosome,1.23,yes,LAMP1B_Symbiosome_yes
+Symbiosome,LAMP1B_symbiosome-05,LAMP1B_Symbiosome,0.92,no,LAMP1B_Symbiosome_no
+Symbiosome,LAMP1B_symbiosome-05,LAMP1B_Symbiosome,1.32,yes,LAMP1B_Symbiosome_yes
+Symbiosome,SLC26A11_symbiosome-01,SLC26A11_Symbiosome,1.09,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-01,SLC26A11_Symbiosome,1.25,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-01,SLC26A11_Symbiosome,0.649,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-02,SLC26A11_Symbiosome,1.16,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-02,SLC26A11_Symbiosome,0.954,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-02,SLC26A11_Symbiosome,0.735,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-02,SLC26A11_Symbiosome,1.37,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-02,SLC26A11_Symbiosome,1.18,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-02,SLC26A11_Symbiosome,0.654,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,0.608,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.36,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.05,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.07,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,2.43,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.36,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.49,yes,SLC26A11_Symbiosome_yes
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,0.947,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.61,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.09,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.18,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,0.526,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.27,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.16,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.38,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,0.866,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-03,SLC26A11_Symbiosome,1.14,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-04,SLC26A11_Symbiosome,1.74,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-04,SLC26A11_Symbiosome,1.55,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-04,SLC26A11_Symbiosome,0.681,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-04,SLC26A11_Symbiosome,0.54,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-04,SLC26A11_Symbiosome,0.733,no,SLC26A11_Symbiosome_no
+Symbiosome,SLC26A11_symbiosome-04,SLC26A11_Symbiosome,0.58,no,SLC26A11_Symbiosome_no

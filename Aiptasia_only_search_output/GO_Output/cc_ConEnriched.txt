@@ -8,7 +8,7 @@ GO:0005743	mitochondrial inner membrane	313	56	18.14	1.5e-10
 GO:0002199	zona pellucida receptor complex	7	7	0.41	2.2e-09
 GO:0005832	chaperonin-containing T-complex	7	7	0.41	2.2e-09
 GO:0005739	mitochondrion	1348	175	78.12	3.2e-08
-GO:0032991	protein-containing complex	4079	333	236.39	1.2e-07
+GO:0032991	protein-containing complex	4112	333	238.3	9.0e-08
 GO:0022625	cytosolic large ribosomal subunit	16	8	0.93	1.0e-06
 GO:0005912	adherens junction	187	27	10.84	1.1e-05
 GO:0005885	Arp2/3 protein complex	4	4	0.23	1.1e-05
@@ -187,7 +187,6 @@ GO:0001917	photoreceptor inner segment	13	2	0.75	0.17173
 GO:0008021	synaptic vesicle	118	6	6.84	0.17317
 GO:0016010	dystrophin-associated glycoprotein complex	25	3	1.45	0.17410
 GO:0043231	intracellular membrane-bounded organelle	9006	586	521.93	0.17541
-GO:0032993	protein-DNA complex	223	18	12.92	0.17976
 GO:0031234	extrinsic component of cytoplasmic side of plasma membrane	26	3	1.51	0.19297
 GO:0042995	cell projection	1481	94	85.83	0.19834
 GO:0030117	membrane coat	79	20	4.58	0.20968
@@ -203,6 +202,7 @@ GO:0005927	muscle tendon junction	4	1	0.23	0.21244
 GO:0097418	neurofibrillary tangle	4	1	0.23	0.21244
 GO:0035145	exon-exon junction complex	15	2	0.87	0.21471
 GO:0060076	excitatory synapse	15	2	0.87	0.21471
+GO:0032993	protein-DNA complex	417	23	24.17	0.22780
 GO:0070938	contractile ring	16	2	0.93	0.23655
 GO:0033270	paranode region of axon	16	2	0.93	0.23655
 GO:0098588	bounding membrane of organelle	1702	124	98.64	0.23930
@@ -313,7 +313,6 @@ GO:0030286	dynein complex	97	7	5.62	0.51694
 GO:0034399	nuclear periphery	84	9	4.87	0.53854
 GO:0005685	U1 snRNP	13	1	0.75	0.53993
 GO:0042641	actomyosin	40	5	2.32	0.54209
-GO:0044815	DNA packaging complex	108	9	6.26	0.54940
 GO:0031410	cytoplasmic vesicle	1331	99	77.14	0.55632
 GO:0016607	nuclear speck	157	9	9.1	0.56218
 GO:0000791	euchromatin	14	1	0.81	0.56661
@@ -437,7 +436,7 @@ GO:0016020	membrane	7607	413	440.85	1.00000
 GO:1990904	ribonucleoprotein complex	350	57	20.28	1.00000
 GO:0097447	dendritic tree	339	18	19.65	1.00000
 GO:0031519	PcG protein complex	45	2	2.61	1.00000
-GO:0034518	RNA cap binding complex	17	5	0.99	1.00000
+GO:0034518	RNA cap binding complex	25	7	1.45	1.00000
 GO:0099568	cytoplasmic region	116	5	6.72	1.00000
 GO:0098562	cytoplasmic side of membrane	74	4	4.29	1.00000
 GO:0098552	side of membrane	161	8	9.33	1.00000
@@ -485,7 +484,7 @@ GO:0042175	nuclear outer membrane-endoplasmic reticulum membrane network	662	54	
 GO:0030120	vesicle coat	27	12	1.56	1.00000
 GO:0090533	cation-transporting ATPase complex	3	1	0.17	1.00000
 GO:0000164	protein phosphatase type 1 complex	21	2	1.22	1.00000
-GO:0034702	ion channel complex	313	5	18.14	1.00000
+GO:0034702	monoatomic ion channel complex	313	5	18.14	1.00000
 GO:0034703	cation channel complex	190	3	11.01	1.00000
 GO:0034704	calcium channel complex	48	2	2.78	1.00000
 GO:1990391	DNA repair complex	19	1	1.1	1.00000
@@ -555,7 +554,7 @@ GO:0061695	transferase complex, transferring phosphorus-containing groups	165	5	
 GO:0098687	chromosomal region	214	13	12.4	1.00000
 GO:0140534	endoplasmic reticulum protein-containing complex	34	7	1.97	1.00000
 GO:0032994	protein-lipid complex	15	2	0.87	1.00000
-GO:0140535	intracellular protein-containing complex	562	49	32.57	1.00000
+GO:0140535	intracellular protein-containing complex	570	51	33.03	1.00000
 GO:0044304	main axon	80	5	4.64	1.00000
 GO:1903293	phosphatase complex	41	8	2.38	1.00000
 GO:0044309	neuron spine	63	4	3.65	1.00000
@@ -594,7 +593,7 @@ GO:0031985	Golgi cisterna	101	1	5.85	1.00000
 GO:1902493	acetyltransferase complex	77	1	4.46	1.00000
 GO:0120114	Sm-like protein family complex	49	4	2.84	1.00000
 GO:1902495	transmembrane transporter complex	347	13	20.11	1.00000
-GO:0101031	chaperone complex	7	7	0.41	1.00000
+GO:0101031	protein folding chaperone complex	7	7	0.41	1.00000
 GO:0031970	organelle envelope lumen	67	10	3.88	1.00000
 GO:0043226	organelle	11049	765	640.32	1.00000
 GO:0031974	membrane-enclosed lumen	1923	150	111.44	1.00000
@@ -690,8 +689,7 @@ GO:0000836	Hrd1p ubiquitin ligase complex	1	0	0.06	1.00000
 GO:0000930	gamma-tubulin complex	11	0	0.64	1.00000
 GO:0000931	gamma-tubulin ring complex	5	0	0.29	1.00000
 GO:0000935	division septum	1	0	0.06	1.00000
-GO:0000939	inner kinetochore	2	0	0.12	1.00000
-GO:0000940	outer kinetochore	19	0	1.1	1.00000
+GO:0000940	outer kinetochore	21	0	1.22	1.00000
 GO:0000943	retrotransposon nucleocapsid	50	0	2.9	1.00000
 GO:0001411	hyphal tip	2	0	0.12	1.00000
 GO:0001518	voltage-gated sodium channel complex	6	0	0.35	1.00000
@@ -999,3 +997,5 @@ GO:0033643	host cell part	33	0	1.91	1.00000
 GO:0033644	host cell membrane	10	0	0.58	1.00000
 GO:0033646	host intracellular part	28	0	1.62	1.00000
 GO:0033647	host intracellular organelle	23	0	1.33	1.00000
+GO:0033648	host intracellular membrane-bounded organelle	23	0	1.33	1.00000
+GO:0033655	host cell cytoplasm part	7	0	0.41	1.00000

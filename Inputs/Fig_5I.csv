@@ -1,0 +1,78 @@
+﻿Random name,Data,Shumpei score,Cat Score,Griffin score,Majority score,Date,Injection,Dish,Animal
+10,yes,High,High,High,High,227,Cas9,2,3
+11,yes,High,High,High,High,226,Cas9,1,4
+13,yes,High,High,High,High,226,SLC26A11 P1,4,4
+14,yes,High,High,High,High,226,WT,3,2
+16,yes,High,High,High,High,226,SLC26A11 P1,1,3
+17,yes,High,High,High,High,227,SLC26A11 P2,1,4
+20,yes,High,High,High,High,226,SLC26A11 P1,3,7
+24,yes,High,High,High,High,226,WT,2,3
+25,yes,High,High,High,High,227,Cas9,2,2
+28,yes,High,High,High,High,227,WT,1,5
+29,yes,High,High,High,High,226,Cas9,1,1
+30,yes,High,High,High,High,226,SLC26A11 P1,3,8
+39,yes,High,High,High,High,226,WT,1,2
+43,yes,High,High,High,High,226,WT,2,16
+44,yes,High,High,High,High,226,SLC26A11 P1,1,2
+45,yes,High,High,High,High,226,WT,1,1
+48,yes,High,High,High,High,226,SLC26A11 P1,4,5
+49,yes,High,High,High,High,226,WT,3,6
+51,yes,High,High,High,High,227,Cas9,1,1
+58,yes,High,High,High,High,227,WT,1,2
+61,yes,High,High,High,High,226,Cas9,2,1
+66,yes,High,High,High,High,226,SLC26A11 P1,3,3
+69,yes,High,High,High,High,227,WT,1,4
+71,yes,High,High,High,High,226,SLC26A11 P1,3,1
+75,yes,High,High,High,High,227,Cas9,3,2
+81,yes,High,High,High,High,227,WT,2,
+82,yes,High,High,High,High,226,SLC26A11 P1,4,1
+86,yes,High,High,High,High,226,SLC26A11 P1,4,2
+89,yes,High,High,High,High,227,Cas9,2,1
+90,yes,High,High,High,High,226,SLC26A11 P1,3,5
+93,yes,High,High,High,High,227,WT,3,2
+99,yes,High,High,High,High,227,Cas9,4,2
+102,yes,High,High,High,High,226,SLC26A11 P1,3,6
+104,yes,High,High,High,High,226,Cas9,1,2
+107,yes,High,High,High,High,226,SLC26A11 P1,4,3
+114,yes,High,High,High,High,227,WT,1,6
+125,yes,High,High,High,High,227,WT,1,3
+126,yes,High,High,High,High,226,Cas9,1,3
+131,yes,High,High,High,High,226,SLC26A11 P1,4,6
+141,yes,High,High,High,High,226,SLC26A11 P1,1,5
+150,yes,High,High,High,High,226,WT,2,2
+156,yes,High,High,High,High,226,WT,3,1
+161,yes,High,High,High,High,227,Cas9,3,1
+1,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,11
+3,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,7
+8,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,9
+18,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,5
+23,yes,Low,Low,Low,Low,227,SLC26A11 P2,4,1
+31,yes,Low,Low,Low,Low,226,SLC26A11 P1,3,10
+34,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,2
+38,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,1
+40,yes,Low,Low,Low,Low,227,SLC26A11 P2,2,3
+41,yes,Low,Low,Low,Low,227,SLC26A11 P2,2,2
+47,yes,Low,Low,Low,Low,226,SLC26A11 P1,3,12
+53,yes,Low,Low,Low,Low,226,SLC26A11 P1,3,4
+70,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,6
+72,yes,Low,Low,Low,Low,227,SLC26A11 P2,3,2
+73,yes,Low,Low,Low,Low,226,SLC26A11 P1,3,9
+74,yes,Low,Low,Low,Low,227,SLC26A11 P2,4,7
+77,yes,Low,Low,Low,Low,227,SLC26A11 P2,4,3
+79,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,5
+80,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,12
+97,yes,Low,Low,Low,Low,227,SLC26A11 P2,4,6
+101,yes,Low,Low,Low,Low,227,SLC26A11 P2,4,4
+108,yes,Low,Low,Low,Low,226,SLC26A11 P1,3,11
+109,yes,Low,Low,Low,Low,227,SLC26A11 P2,3,4
+113,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,13
+119,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,7
+133,yes,Low,High,Low,Low,227,SLC26A11 P2,4,5
+134,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,1
+146,yes,Low,Low,Low,Low,227,SLC26A11 P2,1,3
+147,yes,Low,Low,Low,Low,227,SLC26A11 P2,2,1
+148,yes,Low,Low,Low,Low,227,SLC26A11 P2,4,8
+151,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,9
+154,yes,Low,Low,Low,Low,227,SLC26A11 P2,4,2
+155,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,10
+158,yes,Low,Low,Low,Low,226,SLC26A11 P1,2,3
