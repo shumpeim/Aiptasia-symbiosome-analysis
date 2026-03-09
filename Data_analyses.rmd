@@ -1005,7 +1005,7 @@ ggarrange(TMPercentplot, SAGPercentplot)
 ```
 
 
-## All other analyses
+## Figure 1 
 
 ```{r, echo=TRUE}
 # Chi-Square tests for Figure 2C
@@ -1059,6 +1059,8 @@ stacked_fig <- stacked_data %>% ggplot(aes(fill=Staining, y=Percentage, x=Prep))
 stacked_fig
 ```
 
+## Figure 3
+
 ```{r Fig 3, fig.width=3, fig.height=6, echo=TRUE}
 # Figure 3 plots and statistics
 Vesicles_LAMP1 <- read.csv("Inputs/Fig_3D.csv")
@@ -1091,6 +1093,8 @@ t.test(data=Vesicles_LAMP1, Vesicle.diameters.micron~Sample)
 t.test(data=Vesicles_LAMP1_percent, Percent_ves~Sample)
 ggarrange(Vesicles_LAMP1_percent_plot, Vesicles_LAMP1_plot, ncol = 1, align = "v", common.legend = TRUE)
 ```
+
+## Figure 4
 
 ```{r Fig4, echo=TRUE, fig.width=4, fig.height=5}
 # Plots and statistics for Fig 4
@@ -1254,6 +1258,8 @@ ggarrange(LAMP1B_qPCR_plot+Angle, ATP_qPCR_plot+Angle,CTSB_qPCR_plot+Angle,LAMP1
 
 ```
 
+## Figure 5
+
 ```{r Fig5DF, echo=TRUE, fig.width=4, fig.height=4, echo=TRUE}
 # Plots for Fig 5D, 5F
 Dark_light_tentacles_data_new <- read.csv("Inputs/Fig_5D.csv")
@@ -1373,6 +1379,8 @@ conover.test(Pair2_data_scored_stats$Modified2, Pair2_data_scored_stats$Score, m
 ggarrange(Pair1_phenotype, Pair2_phenotype, common.legend = TRUE, legend="right", labels= c("Guide Pair 1","Guide Pair 2"),label.y = 1.05,vjust = 1.5) %>% annotate_figure(top = text_grob(""))
 ```
 
+## Figure S9
+
 ```{r FigS9, fig.width=4, fig.height=8, echo=TRUE}
 
 # Figure S9
@@ -1424,6 +1432,8 @@ t.test(data=Vesicles_SLC26A11, Vesicle.diameters.micron~Marker)
 
 ```
 
+## Figure S10
+
 ```{r FigS10, fig.width=3, fig.height=5}
 # Figure S10
 Larvae_genotyping <- read.csv("Inputs/Fig_S10.csv")
@@ -1437,6 +1447,8 @@ ICE_larvae_plot<- Larvae_genotyping %>% ggplot(aes(x=Guide, y=Indel, color=Guide
   scale_x_discrete(limit=c("1","2"))
 ICE_larvae_plot
 ```
+
+## Figure S12
 
 ```{r Fig S12, fig.width=5, fig.height=4, echo=TRUE}
 # Figure S12
@@ -1480,6 +1492,8 @@ SLC26A11tentacledata_justmeans_chl
 ggarrange(SLC26A11tentacledata_justmeans_chlplot, SLC26A11tentacledata_justmeans_areaplot,
           ncol = 2, nrow = 1, common.legend = TRUE, legend="bottom")
 ```
+
+## Figure S14
 
 ```{r Fig S14, fig.width=9, fig.height=4, echo=TRUE}
 # Figure S14

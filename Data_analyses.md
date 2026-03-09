@@ -9,7 +9,14 @@ Shumpei Maruyama
   search](#aiptasia-and-breviolum-minutum-combined-search)
 - [Aiptasia only search with Breviolum minutum peptides
   removed](#aiptasia-only-search-with-breviolum-minutum-peptides-removed)
-- [All other analyses](#all-other-analyses)
+- [Figure 1](#figure-1)
+- [Figure 3](#figure-3)
+- [Figure 4](#figure-4)
+- [Figure 5](#figure-5)
+- [Figure S9](#figure-s9)
+- [Figure S10](#figure-s10)
+- [Figure S12](#figure-s12)
+- [Figure S14](#figure-s14)
 
 ## Setup
 
@@ -929,7 +936,7 @@ ggarrange(TMPercentplot, SAGPercentplot)
 
 ![](Data_analyses_files/figure-gfm/SAG_TM_plot_Bminremoved-1.png)<!-- -->
 
-## All other analyses
+## Figure 1
 
 ``` r
 # Chi-Square tests for Figure 2C
@@ -1013,6 +1020,8 @@ stacked_fig
 
 ![](Data_analyses_files/figure-gfm/Fig_1H-1.png)<!-- -->
 
+## Figure 3
+
 ``` r
 # Figure 3 plots and statistics
 Vesicles_LAMP1 <- read.csv("Inputs/Fig_3D.csv")
@@ -1077,6 +1086,8 @@ ggarrange(Vesicles_LAMP1_percent_plot, Vesicles_LAMP1_plot, ncol = 1, align = "v
 ```
 
 ![](Data_analyses_files/figure-gfm/Fig%203-1.png)<!-- -->
+
+## Figure 4
 
 ``` r
 # Plots and statistics for Fig 4
@@ -1324,6 +1335,8 @@ ggarrange(LAMP1B_qPCR_plot+Angle, ATP_qPCR_plot+Angle,CTSB_qPCR_plot+Angle,LAMP1
 
 ![](Data_analyses_files/figure-gfm/Fig4-1.png)<!-- -->
 
+## Figure 5
+
 ``` r
 # Plots for Fig 5D, 5F
 Dark_light_tentacles_data_new <- read.csv("Inputs/Fig_5D.csv")
@@ -1473,6 +1486,8 @@ ggarrange(Pair1_phenotype, Pair2_phenotype, common.legend = TRUE, legend="right"
 
 ![](Data_analyses_files/figure-gfm/Fig5I-1.png)<!-- -->
 
+## Figure S9
+
 ``` r
 # Figure S9
 Vesicles_all <- read.csv("Inputs/Fig_S9.csv")
@@ -1565,6 +1580,8 @@ t.test(data=Vesicles_SLC26A11, Vesicle.diameters.micron~Marker)
     ##            mean in group SLC26A11 mean in group SLC26A11_Symbiosome 
     ##                         0.6354359                         1.1063437
 
+## Figure S10
+
 ``` r
 # Figure S10
 Larvae_genotyping <- read.csv("Inputs/Fig_S10.csv")
@@ -1580,6 +1597,8 @@ ICE_larvae_plot
 ```
 
 ![](Data_analyses_files/figure-gfm/FigS10-1.png)<!-- -->
+
+## Figure S12
 
 ``` r
 # Figure S12
@@ -1676,6 +1695,8 @@ ggarrange(SLC26A11tentacledata_justmeans_chlplot, SLC26A11tentacledata_justmeans
 ```
 
 ![](Data_analyses_files/figure-gfm/Fig%20S12-1.png)<!-- -->
+
+## Figure S14
 
 ``` r
 # Figure S14
