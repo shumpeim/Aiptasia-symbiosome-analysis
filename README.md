@@ -13,3 +13,6 @@ Code for performing analyses and generating figures from Fragpipe output for Aip
    install.packages("renv")
    renv::restore()
 4. Open and knit the rmd files!
+
+## To see summary of analysis
+Please open "Data_analyses.md" on Github to see output from rmd file.
