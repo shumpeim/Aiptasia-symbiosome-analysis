@@ -1,0 +1,208 @@
+```{r}
+library(tidyverse)
+pepdata_aipbmin <- read.table("Inputs/combined_peptide_Aiptasia_and_Bmin.tsv", sep= "\t",  header=TRUE, quote="")
+pepdata_aipbmin_shared <- pepdata_aipbmin %>% filter(str_detect(Protein.ID,"AIP")|str_detect(Mapped.Proteins,"AIP"))
+nrow(pepdata_aipbmin_shared)
+
+pepdata_aiponly <- read.table("Inputs/combined_peptide_Aiptasia_only.tsv", sep="\t",header=TRUE, quote="")
+pepdata_aiponly_shared <- pepdata_aiponly %>% filter(str_detect(Protein.ID,"AIP")|str_detect(Mapped.Proteins,"AIP"))
+nrow(pepdata_aiponly_shared)
+
+dropped_peps_fromcombined <- anti_join(pepdata_aipbmin_shared, pepdata_aiponly_shared, by="Peptide.Sequence" )
+dropped_peps_fromaiponly <- anti_join(pepdata_aiponly_shared, pepdata_aipbmin_shared, by="Peptide.Sequence" )
+
+nrow(dropped_peps_fromcombined) + nrow(dropped_peps_fromaiponly)
+
+unique_peptides_combined <- bind_rows(dropped_peps_fromcombined, dropped_peps_fromaiponly)
+
+Aip_only_symenriched <- read.csv("Aiptasia_only_search_output/Symbiosome_enriched_proteins.csv")
+Combined_symenriched <- read.csv("Aiptasia_Bmin_search_output/Symbiosome_enriched_proteins.csv")
+
+
+# Check presence of unique peptides in each enriched list
+unique_peptides_combined <- unique_peptides_combined %>%
+  mutate(
+    in_aiponly_enriched = Protein.ID %in% Aip_only_symenriched$Protein.ID,
+    in_combined_enriched = Protein.ID %in% Combined_symenriched$Protein.ID
+  )
+
+# Summary
+cat("Unique peptides in Aiptasia-only enriched list:", sum(unique_peptides_combined$in_aiponly_enriched), "\n")
+cat("Unique peptides in combined enriched list:", sum(unique_peptides_combined$in_combined_enriched), "\n")
+cat("Unique peptides in both enriched lists:", sum(unique_peptides_combined$in_aiponly_enriched & unique_peptides_combined$in_combined_enriched), "\n")
+cat("Unique peptides in neither enriched list:", sum(!unique_peptides_combined$in_aiponly_enriched & !unique_peptides_combined$in_combined_enriched), "\n")
+
+
+unique_proteins_combined <- unique_peptides_combined %>%
+  group_by(Protein.ID) %>%
+  summarise(
+    in_aiponly_enriched = any(in_aiponly_enriched),
+    in_combined_enriched = any(in_combined_enriched)
+  )
+
+cat("Unique proteins in Aiptasia-only enriched list:", sum(unique_proteins_combined$in_aiponly_enriched), "\n")
+cat("Unique proteins in combined enriched list:", sum(unique_proteins_combined$in_combined_enriched), "\n")
+cat("Unique proteins in both enriched lists:", sum(unique_proteins_combined$in_aiponly_enriched & unique_proteins_combined$in_combined_enriched), "\n")
+cat("Unique proteins in neither enriched list:", sum(!unique_proteins_combined$in_aiponly_enriched & !unique_proteins_combined$in_combined_enriched), "\n")
+```
+
+
+```{r}
+# Replace zeros with NA in intensity columns for both dataframes
+intensity_cols <- c("Symbiosome_1.Intensity", "Symbiosome_2.Intensity", "Symbiosome_3.Intensity",
+                    "Symbiosome_4.Intensity", "Symbiosome_5.Intensity", "Symbiosome_6.Intensity")
+
+pepdata_aiponly_shared <- pepdata_aiponly_shared %>%
+  mutate(across(all_of(intensity_cols), ~na_if(., 0)))
+
+pepdata_aipbmin_shared <- pepdata_aipbmin_shared %>%
+  mutate(across(all_of(intensity_cols), ~na_if(., 0)))
+
+# Get peptide counts and mean intensity per protein for each search
+aiponly_protein_stats <- pepdata_aiponly_shared %>%
+  group_by(Protein.ID) %>%
+  summarise(
+    peptide_count = n(),
+    mean_intensity = mean(c(Symbiosome_1.Intensity, Symbiosome_2.Intensity, Symbiosome_3.Intensity,
+                            Symbiosome_4.Intensity, Symbiosome_5.Intensity, Symbiosome_6.Intensity), na.rm = TRUE)
+  ) %>%
+  mutate(has_dropped_peptide = Protein.ID %in% unique_proteins_combined$Protein.ID)
+
+combined_protein_stats <- pepdata_aipbmin_shared %>%
+  group_by(Protein.ID) %>%
+  summarise(
+    peptide_count = n(),
+    mean_intensity = mean(c(Symbiosome_1.Intensity, Symbiosome_2.Intensity, Symbiosome_3.Intensity,
+                            Symbiosome_4.Intensity, Symbiosome_5.Intensity, Symbiosome_6.Intensity), na.rm = TRUE)
+  ) %>%
+  mutate(has_dropped_peptide = Protein.ID %in% unique_proteins_combined$Protein.ID)
+
+# Compare
+aiponly_protein_stats %>%
+  group_by(has_dropped_peptide) %>%
+  summarise(
+    n_proteins = n(),
+    median_peptide_count = median(peptide_count),
+    median_intensity = median(mean_intensity, na.rm = TRUE)
+  )
+
+combined_protein_stats %>%
+  group_by(has_dropped_peptide) %>%
+  summarise(
+    n_proteins = n(),
+    median_peptide_count = median(peptide_count),
+    median_intensity = median(mean_intensity, na.rm = TRUE)
+  )
+```
+
+
+
+```{r}
+scrampeps <- read.table("Inputs/combined_peptide_Aiptasia_Bminscram.tsv", sep="\t", header=TRUE)
+AIP_pepcounts <- sum(grepl("AIP", scrampeps$Protein.ID) | grepl("AIP", scrampeps$Mapped.Proteins))
+
+AIP_peps <- scrampeps %>% filter(grepl("AIP", Protein.ID) | grepl("AIP", Mapped.Proteins))
+
+sum(grepl("symb", AIP_peps$Protein.ID) | grepl("symb", AIP_peps$Mapped.Proteins))
+```
+
+
+```{r}
+
+library(tidyverse)
+
+# ─────────────────────────────────────────────
+# 1. LOAD YOUR DATA
+#    Replace the file paths below with your actual files.
+# ─────────────────────────────────────────────
+
+Aip_search <- read.csv("Aiptasia_only_search_output/Symbiosome_enriched_proteins.csv", header=TRUE)
+Combined_search <- read.csv("Aiptasia_Bmin_search_output/Symbiosome_enriched_proteins.csv", header=TRUE)
+Bminremoved_Aip_search <- read.csv("Aiptasia_only_search_Bmin_removed_output/Symbiosome_enriched_proteins.csv", header=TRUE)
+Bminremoved_combined_search <- read.csv("Aiptasia_Bmin_search_Bmin_removed_output/Symbiosome_enriched_proteins.csv", header=TRUE)
+BminScram_search <- read.csv("Aiptasia_Bminscram_search_output/Symbiosome_enriched_proteins.csv", header=TRUE)
+
+# ─────────────────────────────────────────────
+# 2. EXTRACT PROTEIN IDs & TAG EACH LIST
+# ─────────────────────────────────────────────
+
+tag_list <- function(df, list_name) {
+  df %>%
+    dplyr::select(Protein.ID, Hit.description) %>%
+    distinct() %>%
+    mutate(!!list_name := TRUE)          # adds a TRUE column named after the list
+}
+
+aip_tagged              <- tag_list(Aip_search,                  "Aip_search")
+combined_tagged         <- tag_list(Combined_search,             "Combined_search")
+bminremoved_tagged      <- tag_list(Bminremoved_Aip_search,      "Bminremoved_Aip_search")
+bminremoved_comb_tagged <- tag_list(Bminremoved_combined_search, "Bminremoved_combined_search")
+bminscram_tagged        <- tag_list(BminScram_search,            "BminScram_search")
+
+# ─────────────────────────────────────────────
+# 3. FULL JOIN ALL FIVE LISTS
+# ─────────────────────────────────────────────
+
+combined_all <- aip_tagged %>%
+  full_join(combined_tagged,         by = "Protein.ID", suffix = c("", ".combined")) %>%
+  full_join(bminremoved_tagged,      by = "Protein.ID", suffix = c("", ".bmin")) %>%
+  full_join(bminremoved_comb_tagged, by = "Protein.ID", suffix = c("", ".bmincomb")) %>%
+  full_join(bminscram_tagged,        by = "Protein.ID", suffix = c("", ".scram")) %>%
+  # Coalesce Hit.description across all five sources into one column
+  mutate(
+    Hit.description = coalesce(
+      Hit.description,
+      Hit.description.combined,
+      Hit.description.bmin,
+      Hit.description.bmincomb,
+      Hit.description.scram
+    )
+  ) %>%
+  dplyr::select(-Hit.description.combined, -Hit.description.bmin,
+         -Hit.description.bmincomb, -Hit.description.scram) %>%
+  # Replace NA with FALSE (protein absent in that list)
+  mutate(across(c(Aip_search, Combined_search, Bminremoved_Aip_search,
+                  Bminremoved_combined_search, BminScram_search),
+                ~ replace_na(.x, FALSE)))
+
+# ─────────────────────────────────────────────
+# 4. ADD A SUMMARY COLUMN: which lists contain the protein?
+# ─────────────────────────────────────────────
+
+list_names <- c("Aip_search", "Combined_search", "Bminremoved_Aip_search",
+                "Bminremoved_combined_search", "BminScram_search")
+
+combined_all <- combined_all %>%
+  mutate(
+    Present_in = pmap_chr(
+      dplyr::select(., all_of(list_names)),
+      function(...) {
+        flags <- c(...)
+        paste(list_names[flags], collapse = " | ")
+      }
+    )
+  )
+
+# ─────────────────────────────────────────────
+# 5. OPTIONAL: SORT — proteins in all 5 lists first
+# ─────────────────────────────────────────────
+
+combined_all <- combined_all %>%
+  arrange(desc(Aip_search), desc(Combined_search), desc(Bminremoved_Aip_search),
+          desc(Bminremoved_combined_search), desc(BminScram_search))
+
+# ─────────────────────────────────────────────
+# 6. PREVIEW & SAVE
+# ─────────────────────────────────────────────
+
+print(combined_all)
+
+# Quick summary: how many proteins per combination?
+cat("\n── Membership summary ──────────────────────────\n")
+combined_all %>%
+  count(Present_in, sort = TRUE) %>%
+  print()
+
+write_csv(combined_all, "protein_comparison_output.csv")
+cat("\nSaved → protein_comparison_output.csv\n")
+```
