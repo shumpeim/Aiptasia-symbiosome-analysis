@@ -23,7 +23,7 @@ Regardless of the incongruencies in the Aiptasia proteins identified by the Aipt
 
 ## Setup
 1. Install R 4.3.3 from https://cran.r-project.org
-2. Open R and run:
+2. Open "Aiptasia Symbiosome analysis.Rproj" in R and run:
    install.packages("BiocManager")
    BiocManager::install(version = "3.18")
    install.packages("renv")
