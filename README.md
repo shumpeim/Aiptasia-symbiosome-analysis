@@ -16,7 +16,7 @@ Regardless of the incongruencies in the Aiptasia proteins identified by the Aipt
 
 
 
-## Requirements run the "Data_analyses.rmd" code
+## Requirements for running the "Data_analyses.rmd" code
 - R 4.3.3
 - Bioconductor 3.18
 
