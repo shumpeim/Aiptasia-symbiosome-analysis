@@ -17,6 +17,7 @@ Shumpei Maruyama
 - [Symbiosome-enriched protein
   comparisons](#symbiosome-enriched-protein-comparisons)
 - [Figure 1](#figure-1)
+- [Figure 2](#figure-2)
 - [Figure 3](#figure-3)
 - [Figure 4](#figure-4)
 - [Figure 5](#figure-5)
@@ -51,6 +52,9 @@ library(FSA)
 
 ## Aiptasia genome only search
 
+First, we pulled the raw “combined_protein” output from Fragpipe and
+filtered only the Aiptasia proteins (discarding common contaminants)
+
 ``` r
 # Grab protein data
 rawdata <- read.table("Inputs/combined_protein_Aiptasia_only.tsv", sep= "\t",  header=TRUE, quote="")
@@ -65,6 +69,9 @@ rawdata_Aiponly_intensity <- rawdata_Aiponly %>% dplyr::select("Protein.ID","Sym
 write.table(rawdata_Aiponly_intensity, file="Aiptasia_only_search_output/Aiptasia_only_proteins.tsv", sep="\t", row.names=F, quote=F)
 ```
 
+Next, we ran Normalyzer, which outputs the data normalized by several
+different methods.
+
 ``` r
 # Use Normalyzer on curated data
 outDir <- "Aiptasia_only_search_output"
@@ -72,6 +79,9 @@ designFp <- "Inputs/Normalyzermatrix.tsv"
 dataFp <- "Aiptasia_only_search_output/Aiptasia_only_proteins.tsv"
 normalyzer(jobName="vignette_run_Aipnorm", designPath=designFp, dataPath=dataFp, outputDir=outDir)
 ```
+
+Next, we ran NormalyzerDE which uses the CycLoess-normalized data to
+analyze differential enrichment between Control and Symbiosome samples
 
 ``` r
 # Perform statistical analysis using Normalyzer on Cyclic Loess normalized data
@@ -91,6 +101,13 @@ normalyzerDE("vignette_run_Aipnorm",
     ## [1] "Writing statistics report"
 
     ## [1] "All done! Results are stored in: Aiptasia_only_search_output/vignette_run_Aipnorm, processing time was 0 minutes"
+
+Next, we pulled the results from differential enrichment analyses,
+renamed some columns, and annotated each protein with their gene
+description, their RNAseq expression in sym vs apo animals (based on
+Cleves et al. 2020 <https://doi.org/10.1073/pnas.2015737117>), and how
+many transmembrane domains they are predicted to have based on TMHMM
+2.0.
 
 ``` r
 # Rename spreadsheet
@@ -123,6 +140,9 @@ Annotated_proteome_RNAseq_TM <- left_join(Annotated_proteome_RNAseq, TM_Aipgene[
 Annotated_proteome_RNAseq_TM <- Annotated_proteome_RNAseq_TM %>% rename("TM_Helices"="V5")
 Annotated_proteome_RNAseq_TM$TM_Helices <- str_extract(Annotated_proteome_RNAseq_TM$TM_Helices, '\\d+')
 ```
+
+Next, we identified symbiosome-enriched and control-enriched proteins
+and outputted them into respective csv files.
 
 ``` r
 # Find significantly enriched proteins
@@ -176,6 +196,10 @@ countsconenriched$Enrichment <- "ConEnriched"
 write.csv(countsconenriched,file="Aiptasia_only_search_output/Control_enriched_proteins.csv", row.names=F)
 ```
 
+Below is code for a volcano plot that illustrates differential
+enrichment of proteins, along with their annotation if they are an
+experimentally validated symbiosome protein based on previous work.
+
 ``` r
 # Plot volcano plot
 cols <- c("ConEnriched" = "#ffad73", "SymEnriched" = "#26b3ff", "NS" = "grey") 
@@ -211,6 +235,8 @@ vol_plot_known
 
 ![](Data_analyses_files/figure-gfm/volcano_plot_aiponly-1.png)<!-- -->
 
+Below is code for a PCA plot of the normalized proteomics data.
+
 ``` r
 # PCA plots
 PCAdata <- counts %>% dplyr::select("Protein.ID","CycLoess_Con1", "CycLoess_Con2", "CycLoess_Con3","CycLoess_Con4","CycLoess_Con5","CycLoess_Con6", "CycLoess_Sym1","CycLoess_Sym2","CycLoess_Sym3","CycLoess_Sym4","CycLoess_Sym5","CycLoess_Sym6")
@@ -218,7 +244,7 @@ PCAdata <- PCAdata %>% tidyr::drop_na()
 PCAdata <- setNames(data.frame(t(PCAdata[,-1])), PCAdata[,1])
 PCAdata <- PCAdata %>% 
   rownames_to_column(var = "ID")
-PCAdata$Replicate <- c("1","2","3","1","2","3")
+PCAdata$Replicate <- c("1","2","3","4","5","6","1","2","3","4","5","6")
 PCAdata$Treatment <- c("Control","Control","Control","Control","Control","Control","Symbiosome","Symbiosome", "Symbiosome","Symbiosome","Symbiosome", "Symbiosome")
 PCAdata <- PCAdata %>% relocate("Replicate", .after="ID")
 PCAdata <- PCAdata %>% relocate("Treatment", .before="Replicate")
@@ -242,6 +268,10 @@ ggplot(PCi,aes(x=PC1,y=PC2,fill=Treatment))+
 
 ![](Data_analyses_files/figure-gfm/pca_plot_aiponly-1.png)<!-- -->
 
+Below is code that prepares lists of just the Protein IDs for control
+and symbiosome-enriched proteins to be used for GO-term enrichment
+analysis
+
 ``` r
 # Extract just Protein IDs for GO-term enrichment analysis
 conenriched_AIPGENES <- countsconenriched[,"Protein.ID", drop=FALSE]
@@ -249,6 +279,53 @@ write.table(conenriched_AIPGENES, file="Aiptasia_only_search_output/GO_Input/Con
 
 symenriched_AIPGENES <- countssymenriched[,"Protein.ID", drop=FALSE]
 write.table(symenriched_AIPGENES, file="Aiptasia_only_search_output/GO_Input/SymEnriched.txt", row.names=F, quote=F)
+```
+
+Below is code for GO-term enrichment analysis with plots for Cell
+Compartment GO-terms
+
+``` r
+# Aipgene Goterm analysis
+
+folder_of_interest = "Aiptasia_only_search_output/GO_Input/"
+
+mult_files = list.files(folder_of_interest, pattern="*.txt")
+
+for (go_category in c('bp', 'cc', 'mf')) {
+  annot_filename = '/Users/smaruyama/Documents/Goterm analysis/aip_go_annots.all.tsv'
+  gene_id_to_go = readMappings(file=annot_filename)
+  gene_id_to_go = gene_id_to_go[gene_id_to_go != 'no_hit']
+  gene_names = names(gene_id_to_go)
+  
+  for (m in mult_files) {
+    print(paste("Current file:", m))
+    genes_of_interest_filename = paste0(folder_of_interest, m)
+    genes_of_interest = scan(genes_of_interest_filename, character(0), sep="\n")
+    
+    genelist = factor(as.integer(gene_names %in% genes_of_interest))
+    names(genelist) = gene_names
+    
+    GOdata = try(new("topGOdata", ontology=toupper(go_category), allGenes=genelist, gene2GO=gene_id_to_go, annotationFun=annFUN.gene2GO))
+    
+    #  handle error
+    if (class(GOdata) == "try-error") {
+      print (paste0("Error for file", m, "!"))
+      next
+    }
+    
+    #  weight01 is the default algorithm used in Alexa et al. (2006)
+    weight01.fisher <- runTest(GOdata, statistic = "fisher")
+    
+    #  generate a results table (for only the top 1000 GO terms)
+    #    topNodes: highest 1000 GO terms shown
+    #    numChar: truncates GO term descriptions at 1000 chars (basically, disables truncation)
+    results_table = GenTable(GOdata, P_value=weight01.fisher, orderBy="P_value", topNodes=1000, numChar=1000)
+    
+    #  write it out into a file for python post-processing
+    output_filename = paste0("Aiptasia_only_search_output/GO_Output/", go_category, "_", m)
+    write.table(results_table, file=output_filename, quote=FALSE, sep='\t', row.names=F)
+  }
+}
 ```
 
     ## [1] "Current file: ConEnriched.txt"
@@ -293,6 +370,11 @@ allCCplots
 ```
 
 ![](Data_analyses_files/figure-gfm/GO_Term_plot_aiponly-1.png)<!-- -->
+
+Finally, we analyzed the proportion of proteins enriched in each group
+that have predicted transmembrane domains or are upregulated with
+symbiosis at the mRNA level based on Cleves et al. 2020
+(<https://doi.org/10.1073/pnas.2015737117>).
 
 ``` r
 # Make figures for transmembrane protein analysis and RNAseq comparison for Figure 2C
@@ -340,6 +422,11 @@ ggarrange(TMPercentplot, SAGPercentplot)
 
 ## Aiptasia and Breviolum minutum combined search
 
+For this Fragpipe search, we included the algal genome in the search
+database. First, we pulled the raw “combined_protein” output from
+Fragpipe and filtered only the Aiptasia proteins (discarding common
+contaminants and algal proteins)
+
 ``` r
 # Grab protein data
 rawdata <- read.table("Inputs/combined_protein_Aiptasia_and_Bmin.tsv", sep= "\t",  header=TRUE, quote="")
@@ -354,6 +441,9 @@ rawdata_Aiponly_intensity <- rawdata_Aiponly %>% dplyr::select("Protein.ID","Sym
 write.table(rawdata_Aiponly_intensity, file="Aiptasia_Bmin_search_output/Aiptasia_proteins.tsv", sep="\t", row.names=F, quote=F)
 ```
 
+Next, we ran Normalyzer, which outputs the data normalized by several
+different methods.
+
 ``` r
 # Use Normalyzer on curated data
 outDir <- "Aiptasia_Bmin_search_output"
@@ -361,6 +451,9 @@ designFp <- "Inputs/Normalyzermatrix.tsv"
 dataFp <- "Aiptasia_Bmin_search_output/Aiptasia_proteins.tsv"
 normalyzer(jobName="vignette_run_Aipnorm", designPath=designFp, dataPath=dataFp, outputDir=outDir)
 ```
+
+Next, we ran NormalyzerDE which uses the CycLoess-normalized data to
+analyze differential enrichment between Control and Symbiosome samples
 
 ``` r
 # Perform statistical analysis using Normalyzer on Cyclic Loess normalized data
@@ -380,6 +473,13 @@ normalyzerDE("vignette_run_Aipnorm",
     ## [1] "Writing statistics report"
 
     ## [1] "All done! Results are stored in: Aiptasia_Bmin_search_output/vignette_run_Aipnorm, processing time was 0 minutes"
+
+Next, we pulled the results from differential enrichment analyses,
+renamed some columns, and annotated each protein with their gene
+description, their RNAseq expression in sym vs apo animals (based on
+Cleves et al. 2020 <https://doi.org/10.1073/pnas.2015737117>), and how
+many transmembrane domains they are predicted to have based on TMHMM
+2.0.
 
 ``` r
 # Rename spreadsheet
@@ -412,6 +512,9 @@ Annotated_proteome_RNAseq_TM <- left_join(Annotated_proteome_RNAseq, TM_Aipgene[
 Annotated_proteome_RNAseq_TM <- Annotated_proteome_RNAseq_TM %>% rename("TM_Helices"="V5")
 Annotated_proteome_RNAseq_TM$TM_Helices <- str_extract(Annotated_proteome_RNAseq_TM$TM_Helices, '\\d+')
 ```
+
+Next, we identified symbiosome-enriched and control-enriched proteins
+and outputted them into respective csv files.
 
 ``` r
 # Find significantly enriched proteins
@@ -465,6 +568,10 @@ countsconenriched$Enrichment <- "ConEnriched"
 write.csv(countsconenriched,file="Aiptasia_Bmin_search_output/Control_enriched_proteins.csv", row.names=F)
 ```
 
+Below is code for a volcano plot that illustrates differential
+enrichment of proteins, along with their annotation if they are an
+experimentally validated symbiosome protein based on previous work.
+
 ``` r
 # Create volcano plots
 cols <- c("ConEnriched" = "#ffad73", "SymEnriched" = "#26b3ff", "NS" = "grey") 
@@ -500,6 +607,8 @@ vol_plot_known
 
 ![](Data_analyses_files/figure-gfm/volcano_plot_bmin-1.png)<!-- -->
 
+Below is code for a PCA plot of the normalized proteomics data.
+
 ``` r
 # PCA plots
 PCAdata <- counts %>% dplyr::select("Protein.ID","CycLoess_Con1", "CycLoess_Con2", "CycLoess_Con3","CycLoess_Con4","CycLoess_Con5","CycLoess_Con6", "CycLoess_Sym1","CycLoess_Sym2","CycLoess_Sym3","CycLoess_Sym4","CycLoess_Sym5","CycLoess_Sym6")
@@ -507,7 +616,7 @@ PCAdata <- PCAdata %>% tidyr::drop_na()
 PCAdata <- setNames(data.frame(t(PCAdata[,-1])), PCAdata[,1])
 PCAdata <- PCAdata %>% 
   rownames_to_column(var = "ID")
-PCAdata$Replicate <- c("1","2","3","1","2","3")
+PCAdata$Replicate <- c("1","2","3","4","5","6","1","2","3","4","5","6")
 PCAdata$Treatment <- c("Control","Control","Control","Control","Control","Control","Symbiosome","Symbiosome", "Symbiosome","Symbiosome","Symbiosome", "Symbiosome")
 PCAdata <- PCAdata %>% relocate("Replicate", .after="ID")
 PCAdata <- PCAdata %>% relocate("Treatment", .before="Replicate")
@@ -531,6 +640,10 @@ ggplot(PCi,aes(x=PC1,y=PC2,fill=Treatment))+
 
 ![](Data_analyses_files/figure-gfm/pca_plot_bmin-1.png)<!-- -->
 
+Below is code that prepares lists of just the Protein IDs for control
+and symbiosome-enriched proteins to be used for GO-term enrichment
+analysis
+
 ``` r
 # Extract just Protein IDs for GO-term enrichment analysis
 conenriched_AIPGENES <- countsconenriched[,"Protein.ID", drop=FALSE]
@@ -538,6 +651,53 @@ write.table(conenriched_AIPGENES, file="Aiptasia_Bmin_search_output/GO_Input/Con
 
 symenriched_AIPGENES <- countssymenriched[,"Protein.ID", drop=FALSE]
 write.table(symenriched_AIPGENES, file="Aiptasia_Bmin_search_output/GO_Input/SymEnriched.txt", row.names=F, quote=F)
+```
+
+Below is code for GO-term enrichment analysis with plots for Cell
+Compartment GO-terms
+
+``` r
+# Aipgene Goterm analysis
+
+folder_of_interest = "Aiptasia_Bmin_search_output/GO_Input/"
+
+mult_files = list.files(folder_of_interest, pattern="*.txt")
+
+for (go_category in c('bp', 'cc', 'mf')) {
+  annot_filename = '/Users/smaruyama/Documents/Goterm analysis/aip_go_annots.all.tsv'
+  gene_id_to_go = readMappings(file=annot_filename)
+  gene_id_to_go = gene_id_to_go[gene_id_to_go != 'no_hit']
+  gene_names = names(gene_id_to_go)
+  
+  for (m in mult_files) {
+    print(paste("Current file:", m))
+    genes_of_interest_filename = paste0(folder_of_interest, m)
+    genes_of_interest = scan(genes_of_interest_filename, character(0), sep="\n")
+    
+    genelist = factor(as.integer(gene_names %in% genes_of_interest))
+    names(genelist) = gene_names
+    
+    GOdata = try(new("topGOdata", ontology=toupper(go_category), allGenes=genelist, gene2GO=gene_id_to_go, annotationFun=annFUN.gene2GO))
+    
+    #  handle error
+    if (class(GOdata) == "try-error") {
+      print (paste0("Error for file", m, "!"))
+      next
+    }
+    
+    #  weight01 is the default algorithm used in Alexa et al. (2006)
+    weight01.fisher <- runTest(GOdata, statistic = "fisher")
+    
+    #  generate a results table (for only the top 1000 GO terms)
+    #    topNodes: highest 1000 GO terms shown
+    #    numChar: truncates GO term descriptions at 1000 chars (basically, disables truncation)
+    results_table = GenTable(GOdata, P_value=weight01.fisher, orderBy="P_value", topNodes=1000, numChar=1000)
+    
+    #  write it out into a file for python post-processing
+    output_filename = paste0("Aiptasia_Bmin_search_output/GO_Output/", go_category, "_", m)
+    write.table(results_table, file=output_filename, quote=FALSE, sep='\t', row.names=F)
+  }
+}
 ```
 
     ## [1] "Current file: ConEnriched.txt"
@@ -582,6 +742,11 @@ allCCplots
 ```
 
 ![](Data_analyses_files/figure-gfm/GO_Term_plot_bmin-1.png)<!-- -->
+
+Finally, we analyzed the proportion of proteins enriched in each group
+that have predicted transmembrane domains or are upregulated with
+symbiosis at the mRNA level based on Cleves et al. 2020
+(<https://doi.org/10.1073/pnas.2015737117>).
 
 ``` r
 # Make figures for transmembrane protein analysis and RNAseq comparison
@@ -628,6 +793,15 @@ ggarrange(TMPercentplot, SAGPercentplot)
 
 ## Aiptasia only search with Breviolum minutum peptides removed
 
+For this analyses, we removed the peptides with ambiguous taxonomic
+origin from the Aiptasia-genome Fragpipe search results. First, we used
+the combined_peptide output from the combined Aiptasia and B. minutum
+Fragpipe search output and identified the peptide sequences that have
+ambiguous taxonomic origin. We then removed those sequences from the
+combined_peptide output of the Aiptasia-only search results. We then
+performed a sum-of-peptides analysis to aggregate peptides into
+proteins.
+
 ``` r
 # Find all shared peptides between Aiptasia and Breviolum minutum
 pepdata_aipbmin <- read.table("Inputs/combined_peptide_Aiptasia_and_Bmin.tsv", sep= "\t",  header=TRUE, quote="")
@@ -658,6 +832,10 @@ Aipunique_proteins <- Aipunique_peptides %>%
   )
 ```
 
+Next, we used the aggregated protein output from above that removed
+peptides of ambiguous taxonomic origin and prepared the data for
+Normalyzer
+
 ``` r
 # Extract Aiptasia proteins, removing contaminants
 Aipunique_proteins <- Aipunique_proteins %>% filter(str_detect(Protein.ID, "^AIP"))
@@ -669,6 +847,9 @@ Aipunique_proteins <- Aipunique_proteins %>% dplyr::select("Protein.ID","Symbios
 write.table(Aipunique_proteins, file="Aiptasia_only_search_Bmin_removed_output/Aiptasia_only_proteins.tsv", sep="\t", row.names=F, quote=F)
 ```
 
+Next, we ran Normalyzer, which outputs the data normalized by several
+different methods.
+
 ``` r
 # Use Normalyzer on curated data
 outDir <- "Aiptasia_only_search_Bmin_removed_output"
@@ -676,6 +857,9 @@ designFp <- "Inputs/Normalyzermatrix.tsv"
 dataFp <- "Aiptasia_only_search_Bmin_removed_output/Aiptasia_only_proteins.tsv"
 normalyzer(jobName="vignette_run_Aipnorm", designPath=designFp, dataPath=dataFp, outputDir=outDir)
 ```
+
+Next, we ran NormalyzerDE which uses the CycLoess-normalized data to
+analyze differential enrichment between Control and Symbiosome samples
 
 ``` r
 # Perform statistical analysis using Normalyzer on Cyclic Loess normalized data
@@ -695,6 +879,13 @@ normalyzerDE("vignette_run_Aipnorm",
     ## [1] "Writing statistics report"
 
     ## [1] "All done! Results are stored in: Aiptasia_only_search_Bmin_removed_output/vignette_run_Aipnorm, processing time was 0 minutes"
+
+Next, we pulled the results from differential enrichment analyses,
+renamed some columns, and annotated each protein with their gene
+description, their RNAseq expression in sym vs apo animals (based on
+Cleves et al. 2020 <https://doi.org/10.1073/pnas.2015737117>), and how
+many transmembrane domains they are predicted to have based on TMHMM
+2.0.
 
 ``` r
 # Rename spreadsheet
@@ -727,6 +918,9 @@ Annotated_proteome_RNAseq_TM <- left_join(Annotated_proteome_RNAseq, TM_Aipgene[
 Annotated_proteome_RNAseq_TM <- Annotated_proteome_RNAseq_TM %>% rename("TM_Helices"="V5")
 Annotated_proteome_RNAseq_TM$TM_Helices <- str_extract(Annotated_proteome_RNAseq_TM$TM_Helices, '\\d+')
 ```
+
+Next, we identified symbiosome-enriched and control-enriched proteins
+and outputted them into respective csv files.
 
 ``` r
 # Find significantly enriched proteins
@@ -780,6 +974,10 @@ countsconenriched$Enrichment <- "ConEnriched"
 write.csv(countsconenriched,file="Aiptasia_only_search_Bmin_removed_output/Control_enriched_proteins.csv", row.names=F)
 ```
 
+Below is code for a volcano plot that illustrates differential
+enrichment of proteins, along with their annotation if they are an
+experimentally validated symbiosome protein based on previous work.
+
 ``` r
 # Volcano plot
 cols <- c("ConEnriched" = "#ffad73", "SymEnriched" = "#26b3ff", "NS" = "grey") 
@@ -822,7 +1020,7 @@ PCAdata <- PCAdata %>% tidyr::drop_na()
 PCAdata <- setNames(data.frame(t(PCAdata[,-1])), PCAdata[,1])
 PCAdata <- PCAdata %>% 
   rownames_to_column(var = "ID")
-PCAdata$Replicate <- c("1","2","3","1","2","3")
+PCAdata$Replicate <- c("1","2","3","4","5","6","1","2","3","4","5","6")
 PCAdata$Treatment <- c("Control","Control","Control","Control","Control","Control","Symbiosome","Symbiosome", "Symbiosome","Symbiosome","Symbiosome", "Symbiosome")
 PCAdata <- PCAdata %>% relocate("Replicate", .after="ID")
 PCAdata <- PCAdata %>% relocate("Treatment", .before="Replicate")
@@ -846,6 +1044,10 @@ ggplot(PCi,aes(x=PC1,y=PC2,fill=Treatment))+
 
 ![](Data_analyses_files/figure-gfm/pca_plot_Bminremoved-1.png)<!-- -->
 
+Below is code that prepares lists of just the Protein IDs for control
+and symbiosome-enriched proteins to be used for GO-term enrichment
+analysis
+
 ``` r
 # Extract just Protein IDs for GO-term enrichment analysis
 conenriched_AIPGENES <- countsconenriched[,"Protein.ID", drop=FALSE]
@@ -853,6 +1055,53 @@ write.table(conenriched_AIPGENES, file="Aiptasia_only_search_Bmin_removed_output
 
 symenriched_AIPGENES <- countssymenriched[,"Protein.ID", drop=FALSE]
 write.table(symenriched_AIPGENES, file="Aiptasia_only_search_Bmin_removed_output/GO_Input/SymEnriched.txt", row.names=F, quote=F)
+```
+
+Below is code for GO-term enrichment analysis with plots for Cell
+Compartment GO-terms
+
+``` r
+# Aipgene Goterm analysis
+
+folder_of_interest = "Aiptasia_only_search_Bmin_removed_output/GO_Input/"
+
+mult_files = list.files(folder_of_interest, pattern="*.txt")
+
+for (go_category in c('bp', 'cc', 'mf')) {
+  annot_filename = '/Users/smaruyama/Documents/Goterm analysis/aip_go_annots.all.tsv'
+  gene_id_to_go = readMappings(file=annot_filename)
+  gene_id_to_go = gene_id_to_go[gene_id_to_go != 'no_hit']
+  gene_names = names(gene_id_to_go)
+  
+  for (m in mult_files) {
+    print(paste("Current file:", m))
+    genes_of_interest_filename = paste0(folder_of_interest, m)
+    genes_of_interest = scan(genes_of_interest_filename, character(0), sep="\n")
+    
+    genelist = factor(as.integer(gene_names %in% genes_of_interest))
+    names(genelist) = gene_names
+    
+    GOdata = try(new("topGOdata", ontology=toupper(go_category), allGenes=genelist, gene2GO=gene_id_to_go, annotationFun=annFUN.gene2GO))
+    
+    # handle error
+    if (class(GOdata) == "try-error") {
+      print (paste0("Error for file", m, "!"))
+      next
+    }
+    
+    # weight01 is the default algorithm used in Alexa et al. (2006)
+    weight01.fisher <- runTest(GOdata, statistic = "fisher")
+    
+    # generate a results table (for only the top 1000 GO terms)
+    #   topNodes: highest 1000 GO terms shown
+    #   numChar: truncates GO term descriptions at 1000 chars (basically, disables truncation)
+    results_table = GenTable(GOdata, P_value=weight01.fisher, orderBy="P_value", topNodes=1000, numChar=1000)
+    
+    # write it out into a file for python post-processing
+    output_filename = paste0("Aiptasia_only_search_Bmin_removed_output/GO_Output/", go_category, "_", m)
+    write.table(results_table, file=output_filename, quote=FALSE, sep='\t', row.names=F)
+  }
+}
 ```
 
     ## [1] "Current file: ConEnriched.txt"
@@ -900,6 +1149,11 @@ allCCplots
 
 ![](Data_analyses_files/figure-gfm/GO_Term_plot_Bminremoved-1.png)<!-- -->
 
+Finally, we analyzed the proportion of proteins enriched in each group
+that have predicted transmembrane domains or are upregulated with
+symbiosis at the mRNA level based on Cleves et al. 2020
+(<https://doi.org/10.1073/pnas.2015737117>).
+
 ``` r
 #Make figures for transmembrane protein analysis and RNAseq comparison
 counts_vol$SAG <- ifelse(counts_vol$log2FoldChange_Sym0_Apo0>=1, "TRUE", "FALSE")
@@ -945,6 +1199,15 @@ ggarrange(TMPercentplot, SAGPercentplot)
 
 ## Aiptasia and Breviolum minutum combined search with Breviolum minutum peptides removed
 
+For this analyses, we removed the peptides with ambiguous taxonomic
+origin from the combined Aiptasia and B. minutum Fragpipe search
+results. First, we used the combined_peptide output from the combined
+Aiptasia and B. minutum Fragpipe search output and identified the
+peptide sequences that have ambiguous taxonomic origin. We then removed
+those sequences from the combined_peptide output of the Aiptasia-only
+search results. We then performed a sum-of-peptides analysis to
+aggregate peptides into proteins.
+
 ``` r
 # Find all shared peptides between Aiptasia and Breviolum minutum
 pepdata_aipbmin <- read.table("Inputs/combined_peptide_Aiptasia_and_Bmin.tsv", sep= "\t",  header=TRUE, quote="")
@@ -972,6 +1235,10 @@ Aipunique_proteins <- Aipunique_peptides %>%
   )
 ```
 
+Next, we used the aggregated protein output from above that removed
+peptides of ambiguous taxonomic origin and prepared the data for
+Normalyzer
+
 ``` r
 # Extract Aiptasia proteins, removing contaminants
 Aipunique_proteins <- Aipunique_proteins %>% filter(str_detect(Protein.ID, "^AIP"))
@@ -983,6 +1250,9 @@ Aipunique_proteins <- Aipunique_proteins %>% dplyr::select("Protein.ID","Symbios
 write.table(Aipunique_proteins, file="Aiptasia_Bmin_search_Bmin_removed_output/Aiptasia_only_proteins.tsv", sep="\t", row.names=F, quote=F)
 ```
 
+Next, we ran Normalyzer, which outputs the data normalized by several
+different methods.
+
 ``` r
 # Use Normalyzer on curated data
 outDir <- "Aiptasia_Bmin_search_Bmin_removed_output"
@@ -990,6 +1260,9 @@ designFp <- "Inputs/Normalyzermatrix.tsv"
 dataFp <- "Aiptasia_Bmin_search_Bmin_removed_output/Aiptasia_only_proteins.tsv"
 normalyzer(jobName="vignette_run_Aipnorm", designPath=designFp, dataPath=dataFp, outputDir=outDir)
 ```
+
+Next, we ran NormalyzerDE which uses the CycLoess-normalized data to
+analyze differential enrichment between Control and Symbiosome samples
 
 ``` r
 # Perform statistical analysis using Normalyzer on Cyclic Loess normalized data
@@ -1009,6 +1282,13 @@ normalyzerDE("vignette_run_Aipnorm",
     ## [1] "Writing statistics report"
 
     ## [1] "All done! Results are stored in: Aiptasia_Bmin_search_Bmin_removed_output/vignette_run_Aipnorm, processing time was 0 minutes"
+
+Next, we pulled the results from differential enrichment analyses,
+renamed some columns, and annotated each protein with their gene
+description, their RNAseq expression in sym vs apo animals (based on
+Cleves et al. 2020 <https://doi.org/10.1073/pnas.2015737117>), and how
+many transmembrane domains they are predicted to have based on TMHMM
+2.0.
 
 ``` r
 # Rename spreadsheet
@@ -1041,6 +1321,9 @@ Annotated_proteome_RNAseq_TM <- left_join(Annotated_proteome_RNAseq, TM_Aipgene[
 Annotated_proteome_RNAseq_TM <- Annotated_proteome_RNAseq_TM %>% rename("TM_Helices"="V5")
 Annotated_proteome_RNAseq_TM$TM_Helices <- str_extract(Annotated_proteome_RNAseq_TM$TM_Helices, '\\d+')
 ```
+
+Next, we identified symbiosome-enriched and control-enriched proteins
+and outputted them into respective csv files.
 
 ``` r
 # Find significantly enriched proteins
@@ -1094,6 +1377,10 @@ countsconenriched$Enrichment <- "ConEnriched"
 write.csv(countsconenriched,file="Aiptasia_Bmin_search_Bmin_removed_output/Control_enriched_proteins.csv", row.names=F)
 ```
 
+Below is code for a volcano plot that illustrates differential
+enrichment of proteins, along with their annotation if they are an
+experimentally validated symbiosome protein based on previous work.
+
 ``` r
 # Volcano plot
 cols <- c("ConEnriched" = "#ffad73", "SymEnriched" = "#26b3ff", "NS" = "grey") 
@@ -1129,6 +1416,8 @@ vol_plot_known
 
 ![](Data_analyses_files/figure-gfm/volcano_plot_combBminremoved-1.png)<!-- -->
 
+Below is code for a PCA plot of the normalized proteomics data.
+
 ``` r
 # PCA plots
 PCAdata <- counts %>% dplyr::select("Protein.ID","CycLoess_Con1", "CycLoess_Con2", "CycLoess_Con3","CycLoess_Con4","CycLoess_Con5","CycLoess_Con6", "CycLoess_Sym1","CycLoess_Sym2","CycLoess_Sym3","CycLoess_Sym4","CycLoess_Sym5","CycLoess_Sym6")
@@ -1136,7 +1425,7 @@ PCAdata <- PCAdata %>% tidyr::drop_na()
 PCAdata <- setNames(data.frame(t(PCAdata[,-1])), PCAdata[,1])
 PCAdata <- PCAdata %>% 
   rownames_to_column(var = "ID")
-PCAdata$Replicate <- c("1","2","3","1","2","3")
+PCAdata$Replicate <- c("1","2","3","4","5","6","1","2","3","4","5","6")
 PCAdata$Treatment <- c("Control","Control","Control","Control","Control","Control","Symbiosome","Symbiosome", "Symbiosome","Symbiosome","Symbiosome", "Symbiosome")
 PCAdata <- PCAdata %>% relocate("Replicate", .after="ID")
 PCAdata <- PCAdata %>% relocate("Treatment", .before="Replicate")
@@ -1160,6 +1449,10 @@ ggplot(PCi,aes(x=PC1,y=PC2,fill=Treatment))+
 
 ![](Data_analyses_files/figure-gfm/pca_plot_combBminremoved-1.png)<!-- -->
 
+Below is code that prepares lists of just the Protein IDs for control
+and symbiosome-enriched proteins to be used for GO-term enrichment
+analysis
+
 ``` r
 # Extract just Protein IDs for GO-term enrichment analysis
 conenriched_AIPGENES <- countsconenriched[,"Protein.ID", drop=FALSE]
@@ -1167,6 +1460,53 @@ write.table(conenriched_AIPGENES, file="Aiptasia_Bmin_search_Bmin_removed_output
 
 symenriched_AIPGENES <- countssymenriched[,"Protein.ID", drop=FALSE]
 write.table(symenriched_AIPGENES, file="Aiptasia_Bmin_search_Bmin_removed_output/GO_Input/SymEnriched.txt", row.names=F, quote=F)
+```
+
+Below is code for GO-term enrichment analysis with plots for Cell
+Compartment GO-terms
+
+``` r
+# Aipgene Goterm analysis
+
+folder_of_interest = "Aiptasia_Bmin_search_Bmin_removed_output/GO_Input/"
+
+mult_files = list.files(folder_of_interest, pattern="*.txt")
+
+for (go_category in c('bp', 'cc', 'mf')) {
+  annot_filename = '/Users/smaruyama/Documents/Goterm analysis/aip_go_annots.all.tsv'
+  gene_id_to_go = readMappings(file=annot_filename)
+  gene_id_to_go = gene_id_to_go[gene_id_to_go != 'no_hit']
+  gene_names = names(gene_id_to_go)
+  
+  for (m in mult_files) {
+    print(paste("Current file:", m))
+    genes_of_interest_filename = paste0(folder_of_interest, m)
+    genes_of_interest = scan(genes_of_interest_filename, character(0), sep="\n")
+    
+    genelist = factor(as.integer(gene_names %in% genes_of_interest))
+    names(genelist) = gene_names
+    
+    GOdata = try(new("topGOdata", ontology=toupper(go_category), allGenes=genelist, gene2GO=gene_id_to_go, annotationFun=annFUN.gene2GO))
+    
+    # handle error
+    if (class(GOdata) == "try-error") {
+      print (paste0("Error for file", m, "!"))
+      next
+    }
+    
+    # weight01 is the default algorithm used in Alexa et al. (2006)
+    weight01.fisher <- runTest(GOdata, statistic = "fisher")
+    
+    # generate a results table (for only the top 1000 GO terms)
+    #   topNodes: highest 1000 GO terms shown
+    #   numChar: truncates GO term descriptions at 1000 chars (basically, disables truncation)
+    results_table = GenTable(GOdata, P_value=weight01.fisher, orderBy="P_value", topNodes=1000, numChar=1000)
+    
+    # write it out into a file for python post-processing
+    output_filename = paste0("Aiptasia_Bmin_search_Bmin_removed_output/GO_Output/", go_category, "_", m)
+    write.table(results_table, file=output_filename, quote=FALSE, sep='\t', row.names=F)
+  }
+}
 ```
 
     ## [1] "Current file: ConEnriched.txt"
@@ -1214,6 +1554,11 @@ allCCplots
 
 ![](Data_analyses_files/figure-gfm/GO_Term_plot_combBminremoved-1.png)<!-- -->
 
+Finally, we analyzed the proportion of proteins enriched in each group
+that have predicted transmembrane domains or are upregulated with
+symbiosis at the mRNA level based on Cleves et al. 2020
+(<https://doi.org/10.1073/pnas.2015737117>).
+
 ``` r
 #Make figures for transmembrane protein analysis and RNAseq comparison
 counts_vol$SAG <- ifelse(counts_vol$log2FoldChange_Sym0_Apo0>=1, "TRUE", "FALSE")
@@ -1259,6 +1604,12 @@ ggarrange(TMPercentplot, SAGPercentplot)
 
 ## Aiptasia and scrambled Breviolum minutum combined search
 
+For this Fragpipe search, we made a genome database that included both
+the Aiptasia genome and a scrambled B. minutum protein database, to test
+for the effect of database size on the results. First, we pulled the raw
+“combined_protein” output from Fragpipe and filtered only the Aiptasia
+proteins (discarding common contaminants and scrambled algal proteins)
+
 ``` r
 # Grab protein data
 rawdata <- read.table("Inputs/combined_protein_Aiptasia_Bminscram.tsv", sep= "\t",  header=TRUE, quote="")
@@ -1273,6 +1624,9 @@ rawdata_Aiponly_intensity <- rawdata_Aiponly %>% dplyr::select("Protein.ID","Sym
 write.table(rawdata_Aiponly_intensity, file="Aiptasia_Bminscram_search_output/Aiptasia_proteins.tsv", sep="\t", row.names=F, quote=F)
 ```
 
+Next, we ran Normalyzer, which outputs the data normalized by several
+different methods.
+
 ``` r
 # Use Normalyzer on curated data
 outDir <- "Aiptasia_Bminscram_search_output"
@@ -1280,6 +1634,9 @@ designFp <- "Inputs/Normalyzermatrix.tsv"
 dataFp <- "Aiptasia_Bminscram_search_output/Aiptasia_proteins.tsv"
 normalyzer(jobName="vignette_run_Aipnorm", designPath=designFp, dataPath=dataFp, outputDir=outDir)
 ```
+
+Next, we ran NormalyzerDE which uses the CycLoess-normalized data to
+analyze differential enrichment between Control and Symbiosome samples
 
 ``` r
 # Perform statistical analysis using Normalyzer on Cyclic Loess normalized data
@@ -1299,6 +1656,13 @@ normalyzerDE("vignette_run_Aipnorm",
     ## [1] "Writing statistics report"
 
     ## [1] "All done! Results are stored in: Aiptasia_Bminscram_search_output/vignette_run_Aipnorm, processing time was 0 minutes"
+
+Next, we pulled the results from differential enrichment analyses,
+renamed some columns, and annotated each protein with their gene
+description, their RNAseq expression in sym vs apo animals (based on
+Cleves et al. 2020 <https://doi.org/10.1073/pnas.2015737117>), and how
+many transmembrane domains they are predicted to have based on TMHMM
+2.0.
 
 ``` r
 # Rename spreadsheet
@@ -1331,6 +1695,9 @@ Annotated_proteome_RNAseq_TM <- left_join(Annotated_proteome_RNAseq, TM_Aipgene[
 Annotated_proteome_RNAseq_TM <- Annotated_proteome_RNAseq_TM %>% dplyr::rename("TM_Helices"="V5")
 Annotated_proteome_RNAseq_TM$TM_Helices <- str_extract(Annotated_proteome_RNAseq_TM$TM_Helices, '\\d+')
 ```
+
+Next, we identified symbiosome-enriched and control-enriched proteins
+and outputted them into respective csv files.
 
 ``` r
 # Find significantly enriched proteins
@@ -1384,6 +1751,10 @@ countsconenriched$Enrichment <- "ConEnriched"
 write.csv(countsconenriched,file="Aiptasia_Bminscram_search_output/Control_enriched_proteins.csv", row.names=F)
 ```
 
+Below is code for a volcano plot that illustrates differential
+enrichment of proteins, along with their annotation if they are an
+experimentally validated symbiosome protein based on previous work.
+
 ``` r
 # Create volcano plots
 cols <- c("ConEnriched" = "#ffad73", "SymEnriched" = "#26b3ff", "NS" = "grey") 
@@ -1419,6 +1790,8 @@ vol_plot_known
 
 ![](Data_analyses_files/figure-gfm/volcano_plot_bminscram-1.png)<!-- -->
 
+Below is code for a PCA plot of the normalized proteomics data.
+
 ``` r
 # PCA plots
 PCAdata <- counts %>% dplyr::select("Protein.ID","CycLoess_Con1", "CycLoess_Con2", "CycLoess_Con3","CycLoess_Con4","CycLoess_Con5","CycLoess_Con6", "CycLoess_Sym1","CycLoess_Sym2","CycLoess_Sym3","CycLoess_Sym4","CycLoess_Sym5","CycLoess_Sym6")
@@ -1426,7 +1799,7 @@ PCAdata <- PCAdata %>% tidyr::drop_na()
 PCAdata <- setNames(data.frame(t(PCAdata[,-1])), PCAdata[,1])
 PCAdata <- PCAdata %>% 
   rownames_to_column(var = "ID")
-PCAdata$Replicate <- c("1","2","3","1","2","3")
+PCAdata$Replicate <- c("1","2","3","4","5","6","1","2","3","4","5","6")
 PCAdata$Treatment <- c("Control","Control","Control","Control","Control","Control","Symbiosome","Symbiosome", "Symbiosome","Symbiosome","Symbiosome", "Symbiosome")
 PCAdata <- PCAdata %>% relocate("Replicate", .after="ID")
 PCAdata <- PCAdata %>% relocate("Treatment", .before="Replicate")
@@ -1450,6 +1823,10 @@ ggplot(PCi,aes(x=PC1,y=PC2,fill=Treatment))+
 
 ![](Data_analyses_files/figure-gfm/pca_plot_bminscram-1.png)<!-- -->
 
+Below is code that prepares lists of just the Protein IDs for control
+and symbiosome-enriched proteins to be used for GO-term enrichment
+analysis
+
 ``` r
 # Extract just Protein IDs for GO-term enrichment analysis
 conenriched_AIPGENES <- countsconenriched[,"Protein.ID", drop=FALSE]
@@ -1457,6 +1834,50 @@ write.table(conenriched_AIPGENES, file="Aiptasia_Bminscram_search_output/GO_Inpu
 
 symenriched_AIPGENES <- countssymenriched[,"Protein.ID", drop=FALSE]
 write.table(symenriched_AIPGENES, file="Aiptasia_Bminscram_search_output/GO_Input/SymEnriched.txt", row.names=F, quote=F)
+```
+
+``` r
+# Aipgene Goterm analysis
+
+folder_of_interest = "Aiptasia_Bminscram_search_output/GO_Input/"
+
+mult_files = list.files(folder_of_interest, pattern="*.txt")
+
+for (go_category in c('bp', 'cc', 'mf')) {
+  annot_filename = '/Users/smaruyama/Documents/Goterm analysis/aip_go_annots.all.tsv'
+  gene_id_to_go = readMappings(file=annot_filename)
+  gene_id_to_go = gene_id_to_go[gene_id_to_go != 'no_hit']
+  gene_names = names(gene_id_to_go)
+  
+  for (m in mult_files) {
+    print(paste("Current file:", m))
+    genes_of_interest_filename = paste0(folder_of_interest, m)
+    genes_of_interest = scan(genes_of_interest_filename, character(0), sep="\n")
+    
+    genelist = factor(as.integer(gene_names %in% genes_of_interest))
+    names(genelist) = gene_names
+    
+    GOdata = try(new("topGOdata", ontology=toupper(go_category), allGenes=genelist, gene2GO=gene_id_to_go, annotationFun=annFUN.gene2GO))
+    
+    #  handle error
+    if (class(GOdata) == "try-error") {
+      print (paste0("Error for file", m, "!"))
+      next
+    }
+    
+    #  weight01 is the default algorithm used in Alexa et al. (2006)
+    weight01.fisher <- runTest(GOdata, statistic = "fisher")
+    
+    #  generate a results table (for only the top 1000 GO terms)
+    #    topNodes: highest 1000 GO terms shown
+    #    numChar: truncates GO term descriptions at 1000 chars (basically, disables truncation)
+    results_table = GenTable(GOdata, P_value=weight01.fisher, orderBy="P_value", topNodes=1000, numChar=1000)
+    
+    #  write it out into a file for python post-processing
+    output_filename = paste0("Aiptasia_Bminscram_search_output/GO_Output/", go_category, "_", m)
+    write.table(results_table, file=output_filename, quote=FALSE, sep='\t', row.names=F)
+  }
+}
 ```
 
     ## [1] "Current file: ConEnriched.txt"
@@ -1546,6 +1967,10 @@ ggarrange(TMPercentplot, SAGPercentplot)
 ![](Data_analyses_files/figure-gfm/SAG_TM_plot_bminscram-1.png)<!-- -->
 
 ## Symbiosome-enriched protein comparisons
+
+Here we compared the symbiosome-enriched proteins from all of the above
+analyses and annotating which proteins were symbiosome-enriched in which
+analyses.
 
 ``` r
 library(tidyverse)
@@ -1646,6 +2071,41 @@ write_csv(combined_all, "protein_comparison_output.csv")
 
 ## Figure 1
 
+Code used to generate Figure 1H
+
+``` r
+stacked_data <- read.csv(file="Inputs/symbiosome_enrichment_image_analysis.csv", header=T)
+stacked_data$Prep<- factor(stacked_data$Prep, levels=c("Dissociated cells", "After host cell lysis", "After Percoll", "After NP-40"))
+levels(stacked_data$Prep)[levels(stacked_data$Prep)=="After host cell lysis"] <- "After host\ncell lysis"
+levels(stacked_data$Prep)[levels(stacked_data$Prep)=="Dissociated cells"] <- "Dissociated\ncells"
+levels(stacked_data$Prep)[levels(stacked_data$Prep)=="After Percoll"] <- "After\nPercoll"
+levels(stacked_data$Prep)[levels(stacked_data$Prep)=="After NP-40"] <- "After\nNP-40"
+stacked_data$Prep<- factor(stacked_data$Prep, levels=c("Dissociated\ncells", "After host\ncell lysis", "After\nPercoll", "After\nNP-40"))
+
+stacked_data$Staining <- factor(stacked_data$Staining, levels=c("Symbiocyte","Symbiosome","Free algae"))
+
+stackedcolors<- c("magenta","#56B4E9","gold")
+
+stacked_fig <- stacked_data %>% ggplot(aes(fill=Staining, y=Percentage, x=Prep)) + 
+  geom_bar(position="fill", stat="identity")+
+  scale_fill_manual(values=stackedcolors) +
+  scale_y_continuous(labels = scales::percent,
+                                      expand = c(0,0),
+                                      limits = c(0,1),
+                                      breaks= c(0,0.2,0.4,0.6,0.8,1))+
+                     theme_classic(base_size = 15)+
+                     theme(axis.title.x=element_blank()) 
+stacked_fig
+```
+
+![](Data_analyses_files/figure-gfm/Fig_1H-1.png)<!-- -->
+
+## Figure 2
+
+Code used to perform Chi-squared statistical analyses for the
+transpriptional and transmembrane protein analyses performed in Figure
+2.
+
 ``` r
 # Chi-Square tests for Figure 2C
 SAGchi<- read.csv("Inputs/Chi-square test for SAG.csv")
@@ -1701,34 +2161,9 @@ pairwiseNominalIndependence(TMmatrix,
     ## 2 Symbiosome : Control 1.44e-28    4.32e-28
     ## 3     Genome : Control 1.23e-14    1.23e-14
 
-``` r
-stacked_data <- read.csv(file="Inputs/symbiosome_enrichment_image_analysis.csv", header=T)
-stacked_data$Prep<- factor(stacked_data$Prep, levels=c("Dissociated cells", "After host cell lysis", "After Percoll", "After NP-40"))
-levels(stacked_data$Prep)[levels(stacked_data$Prep)=="After host cell lysis"] <- "After host\ncell lysis"
-levels(stacked_data$Prep)[levels(stacked_data$Prep)=="Dissociated cells"] <- "Dissociated\ncells"
-levels(stacked_data$Prep)[levels(stacked_data$Prep)=="After Percoll"] <- "After\nPercoll"
-levels(stacked_data$Prep)[levels(stacked_data$Prep)=="After NP-40"] <- "After\nNP-40"
-stacked_data$Prep<- factor(stacked_data$Prep, levels=c("Dissociated\ncells", "After host\ncell lysis", "After\nPercoll", "After\nNP-40"))
-
-stacked_data$Staining <- factor(stacked_data$Staining, levels=c("Symbiocyte","Symbiosome","Free algae"))
-
-stackedcolors<- c("magenta","#56B4E9","gold")
-
-stacked_fig <- stacked_data %>% ggplot(aes(fill=Staining, y=Percentage, x=Prep)) + 
-  geom_bar(position="fill", stat="identity")+
-  scale_fill_manual(values=stackedcolors) +
-  scale_y_continuous(labels = scales::percent,
-                                      expand = c(0,0),
-                                      limits = c(0,1),
-                                      breaks= c(0,0.2,0.4,0.6,0.8,1))+
-                     theme_classic(base_size = 15)+
-                     theme(axis.title.x=element_blank()) 
-stacked_fig
-```
-
-![](Data_analyses_files/figure-gfm/Fig_1H-1.png)<!-- -->
-
 ## Figure 3
+
+Code used to generate plots in Figure 3
 
 ``` r
 # Figure 3 plots and statistics
@@ -1796,6 +2231,8 @@ ggarrange(Vesicles_LAMP1_percent_plot, Vesicles_LAMP1_plot, ncol = 1, align = "v
 ![](Data_analyses_files/figure-gfm/Fig%203-1.png)<!-- -->
 
 ## Figure 4
+
+Code used to generate plots for Figure 4.
 
 ``` r
 # Plots and statistics for Fig 4
@@ -1934,8 +2371,14 @@ CTSB_plot <-  CTSB_data %>% ggplot(aes(x=Gene,y=Prop_norm, col=Tag))+
   theme_classic() + ylab("Proportion symbiotic\nrelative to shScram")+
   scale_y_continuous(expand = c(0, 0), limits = c(0, 1.5), breaks = seq(0, 1.5, by=.25),labels = scales::percent) +
   scale_x_discrete(limit=c("shScrambled","CTSB"))
+ggarrange(LAMP1B_qPCR_plot+Angle, ATP_qPCR_plot+Angle,CTSB_qPCR_plot+Angle,LAMP1b_plot+Angle, VATP_KD_plot+Angle,CTSB_plot+Angle, nrow=2, ncol=3, align="v")
+```
 
+![](Data_analyses_files/figure-gfm/Fig4-1.png)<!-- -->
 
+Code used to perform all statistical analyses for Fig 4.
+
+``` r
 # t-test for LAMP1B qPCR
 t.test(data=LAMP1b_qpcr_data,fc_Ct_method~Gene)
 ```
@@ -2037,13 +2480,9 @@ t.test(data=LAMP1b_data, Prop_norm~Gene)
     ##   mean in group Lamp1b_92 mean in group shScrambled 
     ##                 0.7850595                 1.0000393
 
-``` r
-ggarrange(LAMP1B_qPCR_plot+Angle, ATP_qPCR_plot+Angle,CTSB_qPCR_plot+Angle,LAMP1b_plot+Angle, VATP_KD_plot+Angle,CTSB_plot+Angle, nrow=2, ncol=3, align="v")
-```
-
-![](Data_analyses_files/figure-gfm/Fig4-1.png)<!-- -->
-
 ## Figure 5
+
+Code used to generate plots for Figures 5D and 5F.
 
 ``` r
 # Plots for Fig 5D, 5F
@@ -2080,6 +2519,27 @@ Dark_light_tentacles_data_new_plot <- Dark_light_tentacles_data_new %>% ggplot(a
   theme_classic() + ylab("Indel %")+xlab("Tentacle phenotype") 
 
 Dark_light_tentacles_data_new_paired <- Dark_light_tentacles_data_new%>% select(Animal, Tentacle, Indel)
+
+
+
+SLC26A11_positive <- read.csv("Inputs/Fig_5F.csv")
+SLC26A11_positive$Animal <-as.factor(SLC26A11_positive$Animal)
+
+SLC26A11_positive_plot <- SLC26A11_positive %>% ggplot(aes(x=Phenotype, y=X..Positive)) +
+  geom_line(aes(group=Animal, color=Animal), size=1, alpha=0.5) +
+  geom_point(aes(fill=Animal),shape=21,color="black", size=3) +
+  scale_color_manual(values=my_colors) +
+    scale_fill_manual(values=my_colors) +
+  theme_classic() + ylab("% SLC26A11 \npositive symbiosomes")+xlab("Tentacle phenotype") + ylim(0,100)
+
+ggarrange(Dark_light_tentacles_data_new_plot,SLC26A11_positive_plot, ncol=2, common.legend=TRUE, legend="bottom")
+```
+
+![](Data_analyses_files/figure-gfm/Fig5DF-1.png)<!-- -->
+
+Code used perform statistical analyses for Figures 5D and 5F
+
+``` r
 wide_df <- Dark_light_tentacles_data_new_paired %>%
   tidyr::pivot_wider(names_from = Tentacle, values_from = Indel)
 
@@ -2100,25 +2560,8 @@ t.test(wide_df$Light, wide_df$Dark, paired = TRUE)
     ##        58.66667
 
 ``` r
-SLC26A11_positive <- read.csv("Inputs/Fig_5F.csv")
-SLC26A11_positive$Animal <-as.factor(SLC26A11_positive$Animal)
-
-SLC26A11_positive_plot <- SLC26A11_positive %>% ggplot(aes(x=Phenotype, y=X..Positive)) +
-  geom_line(aes(group=Animal, color=Animal), size=1, alpha=0.5) +
-  geom_point(aes(fill=Animal),shape=21,color="black", size=3) +
-  scale_color_manual(values=my_colors) +
-    scale_fill_manual(values=my_colors) +
-  theme_classic() + ylab("% SLC26A11 \npositive symbiosomes")+xlab("Tentacle phenotype") + ylim(0,100)
-
-ggarrange(Dark_light_tentacles_data_new_plot,SLC26A11_positive_plot, ncol=2, common.legend=TRUE, legend="bottom")
-```
-
-![](Data_analyses_files/figure-gfm/Fig5DF-1.png)<!-- -->
-
-``` r
 wide_df_symbiosome <- SLC26A11_positive %>%
   tidyr::pivot_wider(names_from = Phenotype, values_from = X..Positive)
-
 #  Paired t-test for Fig 5F
 t.test(wide_df_symbiosome$Light, wide_df_symbiosome$Dark, paired = TRUE)
 ```
@@ -2134,6 +2577,8 @@ t.test(wide_df_symbiosome$Light, wide_df_symbiosome$Dark, paired = TRUE)
     ## sample estimates:
     ## mean difference 
     ##          -63.19
+
+Code used to generate plot for Figure 5I
 
 ``` r
 # Plots for CRISPR/cas9-mutagenesis of SLC26A11 in Galaxea fascicularis
@@ -2179,7 +2624,14 @@ Pair2_phenotype <- Pair2_data_scored %>% ggplot(aes(y=Modified2, x=Score, fill=M
   ylab("Indel %") +
   scale_x_discrete(limit=c("WT","Cas9", "High","Low")) +
   stat_summary(aes(group = Simplified_score),fun = "median", geom = "crossbar", width = 0.6, size = 0.3, color = "black")
+ggarrange(Pair1_phenotype, Pair2_phenotype, common.legend = TRUE, legend="right", labels= c("Guide Pair 1","Guide Pair 2"),label.y = 1.05,vjust = 1.5) %>% annotate_figure(top = text_grob(""))
+```
 
+![](Data_analyses_files/figure-gfm/Fig5I-1.png)<!-- -->
+
+Code used for statistical analyses for Figure 5I
+
+``` r
 # Stats for Guide pair 1
 conover.test(Pair1_data_scored$Modified1, Pair1_data_scored$Score, method = 'bonferroni')
 
@@ -2187,14 +2639,11 @@ Pair2_data_scored_stats <- Pair2_data_scored%>%filter(Score == "WT" |Score == "C
 
 # Stats for Guide pair 2
 conover.test(Pair2_data_scored_stats$Modified2, Pair2_data_scored_stats$Score, method = 'bonferroni')
-
-
-ggarrange(Pair1_phenotype, Pair2_phenotype, common.legend = TRUE, legend="right", labels= c("Guide Pair 1","Guide Pair 2"),label.y = 1.05,vjust = 1.5) %>% annotate_figure(top = text_grob(""))
 ```
 
-![](Data_analyses_files/figure-gfm/Fig5I-1.png)<!-- -->
-
 ## Figure S9
+
+Code used to generate Figure S9.
 
 ``` r
 # Figure S9
@@ -2231,6 +2680,8 @@ ggarrange(LAMP1B_Vesicles_plot, CTSB_Vesicles_plot, SLC26A11_Vesicles_plot, labe
 ```
 
 ![](Data_analyses_files/figure-gfm/FigS9-1.png)<!-- -->
+
+Code used to perform statistical analyses for Figure S9
 
 ``` r
 Vesicles_LAMP1B <- Vesicles_all%>%subset(Marker == "LAMP1B"| Marker=="LAMP1B_Symbiosome")
@@ -2290,6 +2741,8 @@ t.test(data=Vesicles_SLC26A11, Vesicle.diameters.micron~Marker)
 
 ## Figure S10
 
+Code used to generate Figure S10
+
 ``` r
 # Figure S10
 Larvae_genotyping <- read.csv("Inputs/Fig_S10.csv")
@@ -2307,6 +2760,8 @@ ICE_larvae_plot
 ![](Data_analyses_files/figure-gfm/FigS10-1.png)<!-- -->
 
 ## Figure S12
+
+Code used to generate Figure S12
 
 ``` r
 # Figure S12
@@ -2335,6 +2790,15 @@ SLC26A11tentacledata_justmeans_areaplot<- SLC26A11tentacledata_justmeans_area %>
   theme_classic() + ylab("Area (um^2)") + ylim(0,100)+
   scale_x_discrete(limit=c("Dark","Light"))
 
+ggarrange(SLC26A11tentacledata_justmeans_chlplot, SLC26A11tentacledata_justmeans_areaplot,
+          ncol = 2, nrow = 1, common.legend = TRUE, legend="bottom")
+```
+
+![](Data_analyses_files/figure-gfm/Fig%20S12-1.png)<!-- -->
+
+Code used to perform statistical analyses for Figure S12
+
+``` r
 # Stats for cell size effect
 darkslc_area <- SLC26A11tentacledata_justmeans_area%>%subset(Phenotype=="Dark")
 lightslc_area<- SLC26A11tentacledata_justmeans_area%>%subset(Phenotype=="Light")
@@ -2397,14 +2861,9 @@ SLC26A11tentacledata_justmeans_chl
     ## 15 Light     16       6301.
     ## 16 Light     17       9659.
 
-``` r
-ggarrange(SLC26A11tentacledata_justmeans_chlplot, SLC26A11tentacledata_justmeans_areaplot,
-          ncol = 2, nrow = 1, common.legend = TRUE, legend="bottom")
-```
-
-![](Data_analyses_files/figure-gfm/Fig%20S12-1.png)<!-- -->
-
 ## Figure S14
+
+Code used to generate Figure S14
 
 ``` r
 # Figure S14
@@ -2452,6 +2911,8 @@ ggarrange(Gfas_groupscored_algchl_1,Gfas_groupscored_algchl_2,Gfas_groupscored_s
 ```
 
 ![](Data_analyses_files/figure-gfm/Fig%20S14-1.png)<!-- -->
+
+Code used to perform statistical analyses for Figure S14
 
 ``` r
 # Stats for Pair 1 data on algal cell size
