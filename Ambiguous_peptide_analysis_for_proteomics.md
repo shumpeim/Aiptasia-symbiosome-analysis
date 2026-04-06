@@ -8,7 +8,7 @@ To test the effect of database size on the inconsistencies we observed in symbio
 Regardless of the incongruencies in the Aiptasia proteins identified by the Aiptasia-only and combined Aiptasia and _B. minutum_ search strategies, the results of follow-up analyses were largely consistent between all of the search results and analyses (i.e., 1. Successful enrichment/identification of known symbiosomal proteins. 2. Membrane transporters, lysosomal proteins, and vesicle trafficking proteins on the symbiosome, 3. Each protein, for localization by immunofluorescence and functional testing with shRNA and CRISPR/Cas9, was enriched on the symbiosome in both cases) (all data and figures are available in this repository in "Data_analyses.md"). 
 
 ## Reviewer access to raw data
-All proteomics data is available in the below MassIVE repositories
+All proteomics data is available in the below MassIVE repositories  
 Aiptasia-only search: MSV000101380  
 Combined Aiptasia and B. minutum search: MSV000101381  
 Combined Aiptasia and scrambled B. minutum search: MSV000101382  
