@@ -12,5 +12,3 @@ All proteomics data is available in the below MassIVE repositories
 Aiptasia-only search: MSV000101380  
 Combined Aiptasia and B. minutum search: MSV000101381  
 Combined Aiptasia and scrambled B. minutum search: MSV000101382  
-
-Password to access these repositories is provided in the manuscript sent to reviewers.
